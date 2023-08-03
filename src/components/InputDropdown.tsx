@@ -7,7 +7,6 @@ interface InputDropdownProps {
   callback: (option: DataItem) => boolean;
 }
 const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
-  //   const [display, setDisplay] = useState(false);
   const [inputValue, setInputValue] = useState("");
   const [filteredOptions, setFilteredOptions] = useState<DataItem[]>(options);
   const [highlightedOption, setHighlightedOption] = useState(0);
@@ -23,13 +22,12 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
     const userInput = event.currentTarget.value;
     console.log(userInput);
     const newFilteredOptions: DataItem[] = options.filter((option) => {
-      console.log(option);
       option.title.toLowerCase().includes(userInput) ||
         option.alt_titles.some((altOpt: string) =>
           altOpt.toLowerCase().includes(userInput)
         );
     });
-
+    console.log(newFilteredOptions);
     setInputValue(userInput);
     setFilteredOptions(newFilteredOptions);
     setHighlightedOption(0);
