@@ -17,8 +17,8 @@ module.exports = {
   plugins: [
     function ({ addUtilities }) {
       const newUtilities = {
-        ".appearance-searchfield": {
-          "-webkit-appearance": "searchfield",
+        ".appearance-unset": {
+          all: "unset",
         },
       };
       addUtilities(newUtilities);
