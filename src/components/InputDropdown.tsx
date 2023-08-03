@@ -78,7 +78,7 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
   }, [highlightedOption]);
 
   return (
-    <div className="w-full mt-4 relative">
+    <div className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 mt-4 relative">
       <input
         type="search"
         id="default-search"
