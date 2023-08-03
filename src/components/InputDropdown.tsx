@@ -25,7 +25,10 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
 
     const newFilteredOptions: DataItem[] = options.filter(
       (option) =>
-        option.title.toLowerCase().indexOf(userInput.toLowerCase()) > -1
+        option.title.toLowerCase().includes(userInput) ||
+        option.alt_titles.some((altOpt: string) =>
+          altOpt.toLowerCase().includes(userInput)
+        )
     );
 
     setInputValue(userInput);

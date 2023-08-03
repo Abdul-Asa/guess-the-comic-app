@@ -19,10 +19,19 @@ export const fetchData = async ({ countries, trending }: FetchDataProps) => {
     countryCodes.forEach((countryCode) => {
       const fetchPromise = fetch(
         `https://api.comick.app/v1.0/search?country=${countryCode}&limit=300&page=${i}`
-      ).then((response) => response.json());
+      )
+        .then((response) => response.json())
+        .then((data) => {
+          // Add the 'country' key to each item in the data
+          data.forEach((item: any) => {
+            item.country = countryCode;
+          });
+          return data;
+        });
       fetchPromises.push(fetchPromise);
     });
   }
 
   return await Promise.allSettled(fetchPromises);
 };
+

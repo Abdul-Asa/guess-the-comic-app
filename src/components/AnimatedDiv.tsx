@@ -36,7 +36,7 @@ const Circle = ({
         bgClasses[bg]
       } border-gray-500 p-3 rounded-lg min-w-max w-full content-center text-center ${
         active ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-1000 flex items-center justify-center m-2`}
+      } transition-opacity duration-1000 flex items-center justify-center `}
     >
       {children}
     </div>
@@ -68,24 +68,33 @@ const AnimatedDivs: React.FC<AnimatedBoxProps> = ({ guessList, answer }) => {
     <div className="flex flex-col-reverse w-full ">
       {guessList?.map((guess, ind) => (
         <div
-          className="w-full min-w-max flex flex-col items-center p-8 border "
+          className="w-full sm:min-w-max flex flex-col items-center p-8 border "
           key={ind}
         >
           <h1>
             <b>{guess.title}</b>
           </h1>
-          <div className="w-full h-fit-content flex flex-col lg:flex-row justify-around items-center  p-2">
+          <div className="w-full h-fit-content flex flex-col lg:flex-row justify-around items-center gap-4 p-2">
             <div>
               <p className=" text-center">Demographic</p>
               <Circle
                 delay={350}
-                bg={guess.demographic == answer.demographic ? "green" : "red"}
+                bg={
+                  guess.country == answer.country &&
+                  guess.demographic == answer.demographic
+                    ? "green"
+                    : "red"
+                }
               >
                 {guess.demographic === 1 && "Shounen"}
                 {guess.demographic === 2 && "Shouju"}
                 {guess.demographic === 3 && "Seinen"}
                 {guess.demographic === 4 && "Josei"}
-                {guess.demographic === null && "Others"}
+                {guess.demographic === null && ""}
+                {guess.country === "kr" && " Manwha"}
+                {guess.country === "jp" && " Manga"}
+                {guess.country === "gb" && " Webtoon"}
+                {guess.country === "cn" && " Manhua"}
               </Circle>
             </div>
             <div>
@@ -132,7 +141,7 @@ const AnimatedDivs: React.FC<AnimatedBoxProps> = ({ guessList, answer }) => {
               <p className=" text-center">Similar Genres</p>
 
               <Circle delay={1750} bg="none">
-                <div className=" flex max-w-sm flex-wrap-reverse">
+                <div className="flex max-w-xs md:max-w-sm flex-wrap-reverse ">
                   {" "}
                   {getNamesById(
                     genreCodes,

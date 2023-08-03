@@ -9,10 +9,10 @@ import { DataItem, RawItem, getRandomElement } from "@/utils/type";
 import InputDropdown from "@/components/InputDropdown";
 import AnimatedDiv from "@/components/AnimatedDiv";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
 export default function Play() {
   const router = useRouter();
-
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
   const [guesses, setGuesses] = useState<DataItem[]>([]);
@@ -34,6 +34,7 @@ export default function Play() {
     setRadio(event.target.value);
   };
   const loadPage = () => {
+    setopenModal(false);
     fetchData({ countries: checkboxes, trending: radio }).then((results) => {
       results.forEach((result, index) => {
         if (result.status === "fulfilled") {
@@ -51,6 +52,7 @@ export default function Play() {
               alt_titles: item.md_titles.map(
                 (titleObj: { title: any }) => titleObj.title
               ),
+              country: item.country, // Access the 'country' key here
             })
           );
 
@@ -71,29 +73,39 @@ export default function Play() {
     console.log(option);
     setGuesses((prev) => [...prev, option]);
     if (option.title == answer?.title) {
-      setIsVisible(true);
       setblur(false);
       window.scrollTo({
         top: 0,
         left: 0,
         behavior: "smooth",
       });
+      setIsVisible(true);
+
       console.log("Game ends...you win 🎉");
     } else {
       setLives(lives - 1);
       if (lives == 1) {
+        setblur(false);
         console.log("Game ends...you lose");
-        setIsVisible(true);
         window.scrollTo({
           top: 0,
           left: 0,
           behavior: "smooth",
         });
-
-        setblur(false);
+        setIsVisible(true);
       }
     }
     return option.title == answer?.title;
+  };
+  const restartGame = () => {
+    setlist([]);
+    setGuesses([]);
+
+    router.refresh();
+    setIsVisible(false);
+    setopenModal(true);
+    setLives(6);
+    setblur(true);
   };
 
   useEffect(() => {
@@ -154,9 +166,13 @@ export default function Play() {
           </div>
           <h1 className=" m-4">Guess {7 - lives >= 7 ? 6 : 7 - lives} of 6</h1>
           <InputDropdown options={list} callback={handleOptionSelected} />
+          <Link href="/" className="group mt-4 transition duration-300">
+            Home
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black"></span>
+          </Link>
           <AnimatedDiv guessList={guesses} answer={answer} />
-          {isVisible && <Confetti initialVelocityY={20} numberOfPieces={10} />}
-          {/* {isVisible && (
+          {isVisible && lives != 0 && <Confetti />}
+          {isVisible && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
                 You win 🎉
@@ -168,8 +184,8 @@ export default function Play() {
               <div className="flex gap-4">
                 <button
                   className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  // onClick={restartGame}
-              >
+                  onClick={restartGame}
+                >
                   Play again
                 </button>
                 <a href="/">
@@ -203,7 +219,7 @@ export default function Play() {
                 </a>
               </div>
             </Modal>
-          )} */}
+          )}
         </section>
       )}
     </main>
