@@ -19,13 +19,13 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
 
   //handles input change
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const userInput = event.currentTarget.value;
+    const userInput = event.currentTarget.value.toLowerCase(); // convert userInput to lowercase
     console.log(userInput);
     const newFilteredOptions: DataItem[] = options.filter(
       (option) =>
         option.title.toLowerCase().includes(userInput) ||
-        option.alt_titles.some((altOpt: string) =>
-          altOpt.toLowerCase().includes(userInput)
+        option.alt_titles.some(
+          (altOpt: string) => altOpt.toLowerCase().includes(userInput) // convert altOpt to lowercase
         )
     );
     console.log(newFilteredOptions);
