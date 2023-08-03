@@ -83,7 +83,7 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
   return (
     <div className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 mt-4 relative">
       <input
-        type="search"
+        type="text"
         id="default-search"
         className="block appearance-searchfield w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent"
         placeholder="Guess the manhwa"
