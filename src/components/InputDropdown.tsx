@@ -21,12 +21,13 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const userInput = event.currentTarget.value;
     console.log(userInput);
-    const newFilteredOptions: DataItem[] = options.filter((option) => {
-      option.title.toLowerCase().includes(userInput) ||
+    const newFilteredOptions: DataItem[] = options.filter(
+      (option) =>
+        option.title.toLowerCase().includes(userInput) ||
         option.alt_titles.some((altOpt: string) =>
           altOpt.toLowerCase().includes(userInput)
-        );
-    });
+        )
+    );
     console.log(newFilteredOptions);
     setInputValue(userInput);
     setFilteredOptions(newFilteredOptions);
