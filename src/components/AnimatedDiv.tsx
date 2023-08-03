@@ -32,11 +32,11 @@ const Circle = ({
 
   return (
     <div
-      className={`border ${
+      className={`flex border ${
         bgClasses[bg]
-      } border-gray-500 p-3 rounded-lg min-w-max w-full content-center text-center ${
+      } border-gray-500 p-3 rounded-lg w-full  text-center ${
         active ? "opacity-100" : "opacity-0"
-      } transition-opacity duration-1000 flex items-center justify-center `}
+      } transition-opacity duration-1000  items-center justify-center `}
     >
       {children}
     </div>
@@ -142,7 +142,6 @@ const AnimatedDivs: React.FC<AnimatedBoxProps> = ({ guessList, answer }) => {
 
               <Circle delay={1750} bg="none">
                 <div className="flex max-w-xs md:max-w-sm flex-wrap-reverse ">
-                  {" "}
                   {getNamesById(
                     genreCodes,
                     answer.genres.filter((value: any) =>
