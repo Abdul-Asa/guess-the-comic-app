@@ -21,14 +21,14 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
   //handles input change
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const userInput = event.currentTarget.value;
-
-    const newFilteredOptions: DataItem[] = options.filter(
-      (option) =>
-        option.title.toLowerCase().includes(userInput) ||
+    console.log(userInput);
+    const newFilteredOptions: DataItem[] = options.filter((option) => {
+      console.log(option);
+      option.title.toLowerCase().includes(userInput) ||
         option.alt_titles.some((altOpt: string) =>
           altOpt.toLowerCase().includes(userInput)
-        )
-    );
+        );
+    });
 
     setInputValue(userInput);
     setFilteredOptions(newFilteredOptions);
@@ -65,9 +65,6 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
         handleCallback(filteredOptions[highlightedOption]);
     }
   };
-  useEffect(() => {
-    console.log(filteredOptions);
-  }, [inputValue]);
 
   //update the refs has the list change
   useEffect(() => {
