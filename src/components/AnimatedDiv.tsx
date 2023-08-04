@@ -32,9 +32,8 @@ const Circle = ({
 
   return (
     <div
-      className={`flex border ${
-        bgClasses[bg]
-      } border-gray-500 p-3 rounded-lg w-full  text-center ${
+      className={`flex border text-black
+      ${bgClasses[bg]} border-gray-500 p-3 rounded-lg w-full  text-center ${
         active ? "opacity-100" : "opacity-0"
       } transition-opacity duration-1000  items-center justify-center `}
     >
@@ -65,10 +64,10 @@ const AnimatedDivs: React.FC<AnimatedBoxProps> = ({ guessList, answer }) => {
     return names;
   }
   return (
-    <div className="flex flex-col-reverse w-full ">
+    <div className="flex flex-col-reverse w-full dark:bg-gray-800 my-6">
       {guessList?.map((guess, ind) => (
         <div
-          className="w-full sm:min-w-max flex flex-col items-center p-8 border "
+          className="w-full sm:min-w-max flex flex-col items-center p-8 border dark:border-gray-700  "
           key={ind}
         >
           <h1>

@@ -2,17 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
+/* Define your color scheme for light mode */
 @media (prefers-color-scheme: light) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+    --foreground-color: #1a202c; /* Foreground color for light mode (bg-gray-800 in Tailwind) */
+    --background-color: #b9c3ca; /* Background color for light mode (bg-gray-100 in Tailwind) */
+  }
+}
+
+/* Define your color scheme for dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --foreground-color: #f7fafc; /* Foreground color for dark mode (bg-gray-100 in Tailwind) */
+    --background-color: #2c313b; /* Background color for dark mode (bg-gray-800 in Tailwind) */
   }
 }
 
@@ -25,6 +27,71 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
- canvas{
-  max-height: fit-content;
- }
+
+.come-in {
+  animation: animate-in ease-out forwards, animate-out ease-in forwards;
+  animation-timeline: view();
+  animation-range: entry, exit;
+}
+
+@keyframes animate-in {
+  0% { opacity: 0; transform: translateY(100%); }
+  80% { opacity: 0.8; transform: translateY(20%); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes animate-out {
+  0% { opacity: 1; transform: translateY(0); }
+  20% { opacity: 0.8; transform: translateY(-60%); }
+  100% { opacity: 0; transform: translateY(-100%); }
+}
+
+html {
+	scroll-timeline: --page-scroll block;
+}
+@keyframes grow-progress {
+	from { transform: scaleY(0); }
+	to { transform: scaleY(1); }
+}
+#progress {
+	position: fixed;
+	left: 0; top: 0;
+	width: 1em; height: 100%;
+	background: red;
+
+	transform-origin: 50% 0;
+	animation: grow-progress auto linear;
+	animation-timeline: --page-scroll;
+}
+
+@keyframes slide-in {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(0);
+  }
+}
+@keyframes slide-out {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-100%);
+  }
+}
+
+/* #navbar {
+  position: sticky;
+  animation: slide-in 0.5s forwards, slide-out 0.5s forwards;
+  animation-timeline: view();
+  animation-range: entry, exit;
+} */
+
+/* #navbar:state(in-viewport) {
+  animation: slide-in 0.5s forwards;
+}
+
+#navbar:state(out-viewport) {
+  animation: slide-out 0.5s forwards;
+} */

@@ -10,6 +10,7 @@ import InputDropdown from "@/components/InputDropdown";
 import AnimatedDiv from "@/components/AnimatedDiv";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { ColorSwitcher } from "@/components/ColorSwitch";
 
 export default function Play() {
   const router = useRouter();
@@ -34,7 +35,6 @@ export default function Play() {
     setRadio(event.target.value);
   };
   const loadPage = () => {
-    setopenModal(false);
     fetchData({ countries: checkboxes, trending: radio }).then((results) => {
       results.forEach((result, index) => {
         if (result.status === "fulfilled") {
@@ -98,14 +98,13 @@ export default function Play() {
     return option.title == answer?.title;
   };
   const restartGame = () => {
+    router.refresh();
     setlist([]);
     setGuesses([]);
-
-    router.refresh();
-    setIsVisible(false);
-    setopenModal(true);
     setLives(6);
     setblur(true);
+    setIsVisible(false);
+    setopenModal(true);
   };
 
   useEffect(() => {
@@ -113,18 +112,25 @@ export default function Play() {
       const theOne = getRandomElement(list);
       console.log(theOne);
       setanswer(theOne);
+      setopenModal(false);
     }
   }, [list]);
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-6 md:p-24">
+    <main className="flex min-h-screen flex-col items-center px-6 md:px-24">
+      <nav id="navbar" className=" w-full flex justify-center sticky  ">
+        <div className=" come-in w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
+          <h2 className="">Logo</h2>
+          <ColorSwitcher />
+        </div>
+      </nav>
       {list.length == 0 && !answer && <h1>Loading...</h1>}
       {openModal && (
         <Modal>
-          <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
             Welcome
           </h1>
-          <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+          <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
             Choose your settings
           </h3>
           <Form
@@ -161,23 +167,27 @@ export default function Play() {
               src={answer?.imgSrc}
               loader={imageLoader}
               alt={"Guess the manhwa"}
-              style={blur ? { filter: "blur(10px)" } : {}}
+              style={
+                blur
+                  ? { filter: "blur(10px)", objectFit: "cover" }
+                  : { objectFit: "cover" }
+              }
             />{" "}
           </div>
           <h1 className=" m-4">Guess {7 - lives >= 7 ? 6 : 7 - lives} of 6</h1>
           <InputDropdown options={list} callback={handleOptionSelected} />
           <Link href="/" className="group mt-4 transition duration-300">
             Home
-            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black"></span>
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
           <AnimatedDiv guessList={guesses} answer={answer} />
           {isVisible && lives != 0 && <Confetti />}
           {isVisible && (
             <Modal>
-              <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 You win 🎉
               </h1>
-              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 The answer was <b>{answer.title}</b>
               </h3>
 
@@ -198,17 +208,17 @@ export default function Play() {
           )}
           {isVisible && lives == 0 && (
             <Modal>
-              <h1 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 You lose 😞
               </h1>
-              <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+              <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 The answer was <b>{answer.title}</b>
               </h3>
 
               <div className="flex gap-4">
                 <button
                   className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  // onClick={restartGame}
+                  onClick={restartGame}
                 >
                   Try again
                 </button>

@@ -1,6 +1,7 @@
 import './globals.css'
 import { Inter } from 'next/font/google'
 import favicon from "./favicon.ico";
+import { ThemeProvider } from "./theme-provider";
 const inter = Inter({ subsets: ["latin"] });
 
 const meta = {
@@ -37,13 +38,20 @@ export const metadata = {
   },
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
-      <head>
-        <link rel="shortcut icon" href={favicon.src} type="image/x-icon" />
-      </head>
-      <body className={inter.className}>{children}</body>
+      <body
+        className={`${inter.className} bg-slate-50 dark:bg-[#0d1117] duration-500`}
+      >
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <main>{children}</main>
+        </ThemeProvider>
+      </body>
     </html>
   );
 }

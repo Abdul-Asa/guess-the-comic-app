@@ -20,7 +20,6 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
   //handles input change
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const userInput = event.currentTarget.value.toLowerCase(); // convert userInput to lowercase
-    console.log(userInput);
     const newFilteredOptions: DataItem[] = options.filter(
       (option) =>
         option.title.toLowerCase().includes(userInput) ||
@@ -28,7 +27,6 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
           (altOpt: string) => altOpt.toLowerCase().includes(userInput) // convert altOpt to lowercase
         )
     );
-    console.log(newFilteredOptions);
     setInputValue(userInput);
     setFilteredOptions(newFilteredOptions);
     setHighlightedOption(0);
@@ -81,9 +79,9 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
   return (
     <div className="w-full sm:w-3/4 md:w-1/2 lg:w-1/3 mt-4 relative">
       <input
-        type="text"
+        type="search"
         id="default-search"
-        className=" block w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent "
+        className="block w-full px-3 py-2 text-sm border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-transparent dark:bg-gray-800 dark:text-white"
         placeholder="Guess the manhwa"
         onChange={handleInputChange}
         onKeyDown={handleKeyDown}
@@ -94,15 +92,16 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
       {inputValue.length > 2 && filteredOptions.length > 0 && (
         <ul
           className={`w-full mt-2 ${
-            filteredOptions.length > 0 && "border border-gray-300"
-          } rounded-md bg-white z-10 max-h-[15rem] overflow-auto`}
+            filteredOptions.length > 0 &&
+            "border border-gray-300 dark:border-gray-600"
+          }  bg-white dark:bg-gray-800 z-10 max-h-[15rem] overflow-auto`}
         >
           {filteredOptions.map((option, i) => (
             <li
               ref={(el) => (optionRefs.current[i] = el)}
-              className={`flex items-center px-3 py-2 border-b border-gray-300 last:border-b-0 ${
-                highlightedOption === i ? "bg-gray-200" : ""
-              } hover:bg-gray-300 cursor-pointer`}
+              className={`flex items-center px-3 py-2 border-b border-gray-300 dark:border-gray-600 last:border-b-0 ${
+                highlightedOption === i ? "bg-gray-200 dark:bg-gray-700" : ""
+              } hover:bg-gray-300 dark:hover:bg-gray-600 cursor-pointer`}
               key={i}
               onClick={() => {
                 handleCallback(option);
@@ -117,7 +116,9 @@ const InputDropdown: React.FC<InputDropdownProps> = ({ options, callback }) => {
                 className="w-6 h-6 mr-2"
                 loading="lazy"
               />
-              {option.title}
+              <span className="text-gray-900 dark:text-white">
+                {option.title}
+              </span>
             </li>
           ))}
         </ul>
