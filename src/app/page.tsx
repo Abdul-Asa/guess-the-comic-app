@@ -1,101 +1,62 @@
 "use client";
 import { ColorSwitcher } from "@/components/ColorSwitch";
+import { motion, useIsPresent } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
-// import { MotionValue, useScroll, useTransform } from "framer-motion";
-// import { useRef } from "react";
-
-// function useParallax(value: MotionValue<number>, distance: string) {
-//   return useTransform(value, [0, 1], ["-" + distance, distance]);}
-
-interface Props {
-  alt: string;
-  category: string;
-  index: number;
-  aspectRatio: string;
-}
+import { usePathname } from "next/navigation";
 
 export default function Home() {
-  const [clubs, setClubs] = useState([
-    "Arsenal",
-    "Aston Villa",
-    "Brentford",
-    "Brighton & Hove Albion",
-    "Burnley",
-    "Chelsea",
-    "Crystal Palace",
-    "Everton",
-    "Leeds United",
-    "Leicester City",
-    "Liverpool",
-    "Manchester City",
-    "Manchester United",
-    "Newcastle United",
-    "Norwich City",
-    "Southampton",
-    "Tottenham Hotspur",
-    "Watford",
-    "West Ham United",
-    "Wolverhampton Wanderers",
-  ]);
-
+  const isPresent = useIsPresent();
+  const pathname = usePathname();
   return (
     <main
       className="w-full main flex flex-col items-center"
       scroll-direction="up"
     >
-      {" "}
-      {/* <div id="progress"></div> */}
-      <nav id="navbar" className=" w-full flex justify-center sticky  ">
-        <div className=" come-in w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
-          <h2 className="">Logo</h2>
-          <ColorSwitcher />
-        </div>
+      <div id="progress" className=" bg-black dark:bg-white"></div>
+      <nav
+        id="navbar"
+        className=" w-full flex sticky come-in max-w-5xl justify-between items-center p-3 text-sm text-foreground"
+      >
+        <h2 className="">Logo</h2>
+        <ColorSwitcher />
       </nav>
-      <h1 className=" text-center">Hello</h1>
-      <Link href={"/play-game"} as={"/play-game"}>
-        play game
-      </Link>
-      <div className=" max-h-96 overflow-auto m-8 border-4 border-cyan-950">
-        {clubs.map((club, index) => (
-          <div
-            key={index}
-            className="  come-in m-4 p-4 bg-blue-500 text-white rounded shadow"
-          >
-            {club}
+      <header className=" m-24 md:m-36 max-w-5xl ">
+        <h1 className=" text-5xl md:text-7xl font-extrabold tracking-tight text-center">
+          Guess <span className="text-blue-600">the Comic</span>
+        </h1>
+      </header>
+      <div className="w-full max-w-5xl flex justify-around gap-12 items-center flex-col md:flex-row">
+        <Link
+          href="/play-game"
+          as={"/play-game"}
+          className="group w-full mt-4 transition duration-300"
+        >
+          <div className="bg-blue-600 grid grid-cols-3 hover:bg-purple-600 border border-black dark:border-white text-white h-10 md:h-40 w-full justify-center transition-colors duration-200 ease-out">
+            <div className="flex flex-col col-span-2 space-y-4">
+              <div className="flex-1">Play random games</div>
+              <div className="flex-1">
+                Play →
+                <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-white"></span>
+              </div>
+            </div>
+            <div className=" col-span-1">💀 </div>
           </div>
-        ))}
-      </div>
-      <div className=" max-h-96 overflow-auto m-8 border-4 border-cyan-950">
-        {clubs.map((club, index) => (
-          <div
-            key={index}
-            className="  come-in m-4 p-4 bg-blue-500 text-white rounded shadow"
-          >
-            {club}
+        </Link>
+        <Link
+          href="/play-game"
+          as={"/play-game"}
+          className="group w-full mt-4 transition duration-300"
+        >
+          <div className="hover:bg-blue-600 border border-white h-10 md:h-40 w-full justify-center flex items-center transition-colors duration-200 ease-out">
+            Play
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </div>
-        ))}
-      </div>
-      <div className=" max-h-96 overflow-auto m-8 border-4 border-cyan-950">
-        {clubs.map((club, index) => (
-          <div
-            key={index}
-            className="  come-in m-4 p-4 bg-blue-500 text-white rounded shadow"
-          >
-            {club}
-          </div>
-        ))}
-      </div>
-      <div className=" max-h-96 overflow-auto m-8 border-4 border-cyan-950">
-        {clubs.map((club, index) => (
-          <div
-            key={index}
-            className="  come-in m-4 p-4 bg-blue-500 text-white rounded shadow"
-          >
-            {club}
-          </div>
-        ))}
+        </Link>
       </div>
     </main>
   );
 }
+// "--base-width": "24vw",
+// top: "-18vw",
+// letterSpacing: "-1.4vw",
+// x: "-50%"

@@ -8,12 +8,16 @@ import { useEffect, useState } from "react";
 import { DataItem, RawItem, getRandomElement } from "@/utils/type";
 import InputDropdown from "@/components/InputDropdown";
 import AnimatedDiv from "@/components/AnimatedDiv";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
+import { useIsPresent, motion } from "framer-motion";
 import { ColorSwitcher } from "@/components/ColorSwitch";
+import Spinner from "@/components/Spinner";
 
 export default function Play() {
   const router = useRouter();
+  const isPresent = useIsPresent();
+  const pathname = usePathname();
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
   const [guesses, setGuesses] = useState<DataItem[]>([]);
@@ -124,7 +128,11 @@ export default function Play() {
           <ColorSwitcher />
         </div>
       </nav>
-      {list.length == 0 && !answer && <h1>Loading...</h1>}
+      {list.length == 0 && !answer && (
+        <div className="mt-10 flex items-center">
+          <Spinner />
+        </div>
+      )}
       {openModal && (
         <Modal>
           <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
@@ -146,11 +154,11 @@ export default function Play() {
             >
               Let's Play🎉
             </button>
-            <a href="/">
+            <Link href="/" as={"/"}>
               <button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
                 Back
               </button>
-            </a>
+            </Link>
           </div>
         </Modal>
       )}

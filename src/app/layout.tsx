@@ -1,8 +1,7 @@
-import './globals.css'
-import { Inter } from 'next/font/google'
-import favicon from "./favicon.ico";
+import "./globals.css";
+import "../styles/font.css";
 import { ThemeProvider } from "./theme-provider";
-const inter = Inter({ subsets: ["latin"] });
+import Client from "./animate-wrapper";
 
 const meta = {
   title: "Guess the comic",
@@ -45,11 +44,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} bg-slate-50 dark:bg-[#0d1117] duration-500`}
-      >
+      <body className={`duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <main>{children}</main>
+          <Client>
+            <main>{children}</main>
+          </Client>
         </ThemeProvider>
       </body>
     </html>
