@@ -10,6 +10,10 @@
   }
 }
 
+html {
+	scroll-timeline: --page-scroll block;
+}
+
 /* Define your color scheme for dark mode */
 @media (prefers-color-scheme: dark) {
   :root {
@@ -29,26 +33,27 @@ body {
 }
 
 .come-in {
-  animation: animate-in ease-out forwards, animate-out ease-in forwards;
-  animation-timeline: view();
-  animation-range: entry, exit;
+  animation: ease-in-out animate-in-and-out;
+	animation-timeline: view();
 }
 
-@keyframes animate-in {
-  0% { opacity: 0; transform: translateY(100%); }
-  80% { opacity: 0.8; transform: translateY(20%); }
-  100% { opacity: 1; transform: translateY(0); }
+@keyframes animate-in-and-out {
+	entry 0%  {
+		opacity: 0; transform: translateY(100%);
+	}
+	entry 100%  {
+		opacity: 1; transform: translateY(0);
+	}
+
+	exit 0% {
+		opacity: 1; transform: translateY(0);
+	}
+	exit 100% {
+		opacity: 0; transform: translateY(-100%);
+	}
 }
 
-@keyframes animate-out {
-  0% { opacity: 1; transform: translateY(0); }
-  20% { opacity: 0.8; transform: translateY(-60%); }
-  100% { opacity: 0; transform: translateY(-100%); }
-}
 
-html {
-	scroll-timeline: --page-scroll block;
-}
 @keyframes grow-progress {
 	from { transform: scaleY(0); }
 	to { transform: scaleY(1); }
@@ -64,34 +69,4 @@ html {
 	animation-timeline: --page-scroll;
 }
 
-@keyframes slide-in {
-  from {
-    transform: translateY(-100%);
-  }
-  to {
-    transform: translateY(0);
-  }
-}
-@keyframes slide-out {
-  from {
-    transform: translateY(0);
-  }
-  to {
-    transform: translateY(-100%);
-  }
-}
 
-/* #navbar {
-  position: sticky;
-  animation: slide-in 0.5s forwards, slide-out 0.5s forwards;
-  animation-timeline: view();
-  animation-range: entry, exit;
-} */
-
-/* #navbar:state(in-viewport) {
-  animation: slide-in 0.5s forwards;
-}
-
-#navbar:state(out-viewport) {
-  animation: slide-out 0.5s forwards;
-} */
