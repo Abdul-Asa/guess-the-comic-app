@@ -7,7 +7,7 @@ interface FetchDataProps {
 
 export const fetchData = async ({ countries, trending }: FetchDataProps) => {
   const fetchPromises: Promise<any>[] = [];
-  let num = trending === "All" ? 12 : 2;
+  let num = trending === "All" ? 11 : 3;
 
   // Get the country codes for which the value is true
   const countryCodes = Object.keys(countries).filter(

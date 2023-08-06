@@ -24,6 +24,7 @@ export default function Play() {
   const [openModal, setopenModal] = useState(true);
   const [blur, setblur] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [loading, setIsloading] = useState(true);
   const [lives, setLives] = useState<number>(6);
   const [radio, setRadio] = useState<string>("Trending");
   const [checkboxes, setCheckboxes] = useState<{ [key: string]: boolean }>({
@@ -39,6 +40,8 @@ export default function Play() {
     setRadio(event.target.value);
   };
   const loadPage = () => {
+    setopenModal(false);
+    setIsloading(true);
     fetchData({ countries: checkboxes, trending: radio }).then((results) => {
       results.forEach((result, index) => {
         if (result.status === "fulfilled") {
@@ -59,7 +62,6 @@ export default function Play() {
               country: item.country, // Access the 'country' key here
             })
           );
-
           setlist((prev) => [...prev, transformedData].flat());
         } else {
           console.error(
@@ -116,7 +118,7 @@ export default function Play() {
       const theOne = getRandomElement(list);
       console.log(theOne);
       setanswer(theOne);
-      setopenModal(false);
+      setIsloading(false);
     }
   }, [list]);
 
@@ -128,7 +130,7 @@ export default function Play() {
           <ColorSwitcher />
         </div>
       </nav>
-      {list.length == 0 && !answer && (
+      {loading && (
         <div className="mt-10 flex items-center">
           <Spinner />
         </div>
@@ -162,7 +164,7 @@ export default function Play() {
           </div>
         </Modal>
       )}
-      {answer && (
+      {!loading && answer && (
         <section className="flex flex-col items-center w-full">
           <div
             className="p-3 rounded-lg bg-gray-200 text-black shadow-lg "
@@ -184,11 +186,11 @@ export default function Play() {
           </div>
           <h1 className=" m-4">Guess {7 - lives >= 7 ? 6 : 7 - lives} of 6</h1>
           <InputDropdown options={list} callback={handleOptionSelected} />
+          <AnimatedDiv guessList={guesses} answer={answer} />
           <Link href="/" className="group mt-4 transition duration-300">
             Home
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
-          <AnimatedDiv guessList={guesses} answer={answer} />
           {isVisible && lives != 0 && <Confetti />}
           {isVisible && (
             <Modal>
@@ -196,7 +198,7 @@ export default function Play() {
                 You win 🎉
               </h1>
               <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
-                The answer was <b>{answer.title}</b>
+                The answer was <b>{answer?.title}</b>
               </h3>
 
               <div className="flex gap-4">

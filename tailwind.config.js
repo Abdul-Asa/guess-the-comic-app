@@ -12,6 +12,10 @@ module.exports = {
       fontFamily: {
         sans: ["sofia-pro", "sans-serif"],
       },
+      backgroundColor: {
+        "custom-gray": "#EBEBEB",
+        "custom-black": "#0d0d0d",
+      },
     },
   },
 };

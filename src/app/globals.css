@@ -24,12 +24,13 @@ html {
 
 * {
   --black: #222222;
-  --white: #f7fafc;
+  --white: #EBEBEB;
   --gray: #adadad;
   --blue: #1000bb;
 }
 main {
   height: 200vh;
+ 
 }
 
 footer {
@@ -115,18 +116,15 @@ footer {
 body {
   --black: #000000;
   --ash-black: #222;
-  --white: #fafafa;
   --sky: #00ccff;
   --green: #22dddd;
   --blue: #1300ff;
-  --dusk: #6600ff;
-  --purple: #9900ff;
+  --purple: rgb(147, 51, 234);
   --pink: #ff0066;
   --red: #fe0222;
   --orange: #fd7702;
   --yellow: #ffbb00;
 
-  --background: var(--white);
   --accent: var(--purple);
 
 }
@@ -172,14 +170,18 @@ body {
   margin: 100px auto;
 }
 
+
+
 .sk-cube-grid .sk-cube {
   width: 33%;
   height: 33%;
-  background-color: #333;
+  background-color: var(--purple);
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
           animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
 }
+
+
 .sk-cube-grid .sk-cube1 {
   -webkit-animation-delay: 0.2s;
           animation-delay: 0.2s; }
@@ -228,3 +230,6 @@ body {
   } 
 }
 
+.try {
+  transform: translateX(100%);
+}

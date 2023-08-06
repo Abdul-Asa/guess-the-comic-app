@@ -46,9 +46,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Client>
-            <main>{children}</main>
-          </Client>
+          <Client>{children}</Client>
         </ThemeProvider>
       </body>
     </html>
