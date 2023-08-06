@@ -6,6 +6,8 @@ html {
   scroll-timeline: --page-scroll block;
 }
 
+
+
 /* Define your color scheme for light mode */
 @media (prefers-color-scheme: light) {
   :root {
@@ -28,10 +30,7 @@ html {
   --gray: #adadad;
   --blue: #1000bb;
 }
-main {
-  height: 200vh;
- 
-}
+
 
 footer {
   animation: show-footer 2s linear;
@@ -41,6 +40,9 @@ footer {
   width: 100%;
   bottom: 0;
   height: 5%;
+}
+main{
+ height: 300vh;
 }
 
 @supports (animation-timeline: view()) {
@@ -59,6 +61,13 @@ footer {
     animation: grow-progress linear;
     animation-timeline: --page-scroll;
   }
+
+  .grow-timeline {
+    transform-origin: start;
+    transition: height 0.3s ease;
+    height: var(--line-height);
+  }
+  
 }
 
 @keyframes animate-in {
@@ -100,6 +109,15 @@ footer {
   }
 }
 
+@keyframes grow-timeline {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
 @keyframes show-footer {
   from {
     opacity: 0;
@@ -110,8 +128,6 @@ footer {
     transform: translateX(0);
   }
 }
-
-
 
 body {
   --black: #000000;
@@ -129,16 +145,12 @@ body {
 
 }
 
-
 * {
   font-family: sofia-pro, sans-serif;
   font-weight: 400;
   font-style: normal;
   -webkit-font-smoothing: antialiased;
 }
-
-
-
 
 .animate-in {
   animation: animateIn 0.3s ease 0.15s both;
@@ -155,6 +167,7 @@ body {
   }
 
 }
+
 .privacy-screen {
   position: fixed;
   top: 0;
@@ -164,13 +177,12 @@ body {
   background-color: var(--blue);
   z-index: 200;
 }
+
 .sk-cube-grid {
   width: 40px;
   height: 40px;
   margin: 100px auto;
 }
-
-
 
 .sk-cube-grid .sk-cube {
   width: 33%;
@@ -180,7 +192,6 @@ body {
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
           animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
 }
-
 
 .sk-cube-grid .sk-cube1 {
   -webkit-animation-delay: 0.2s;
@@ -230,6 +241,4 @@ body {
   } 
 }
 
-.try {
-  transform: translateX(100%);
-}
+

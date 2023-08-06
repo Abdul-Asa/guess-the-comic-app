@@ -2,11 +2,32 @@
 import { ColorSwitcher } from "@/components/ColorSwitch";
 import { motion, useIsPresent } from "framer-motion";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { useRef, useEffect } from "react";
 
 export default function Home() {
-  const isPresent = useIsPresent();
-  const pathname = usePathname();
+  // const lineRef = useRef(null);
+  // useEffect(() => {
+  //   const handleScroll = () => {
+  //     if (lineRef.current) {
+  //       const section = lineRef.current.parentElement;
+  //       const sectionTop = section.offsetTop;
+  //       const sectionHeight = section.offsetHeight;
+  //       const scrollPosition = window.scrollY;
+  //       const progress = Math.min(
+  //         Math.max((scrollPosition - sectionTop) / sectionHeight, 0),
+  //         1
+  //       );
+  //       lineRef.current.style.setProperty(
+  //         "--line-height",
+  //         `${progress * 100}%`
+  //       );
+  //     }
+  //   };
+
+  //   window.addEventListener("scroll", handleScroll);
+  //   return () => window.removeEventListener("scroll", handleScroll);
+  // }, []);
+
   return (
     <main
       className="w-full main flex flex-col items-center bg-custom-gray dark:bg-custom-black"
@@ -31,7 +52,7 @@ export default function Home() {
           as={"/play-game"}
           className="group w-full mt-4 transition duration-300"
         >
-          <div className="bg-blue-600 p-4 grid grid-cols-3 hover:bg-purple-600 border border-black dark:border-white text-white h-fit md:h-40 w-full justify-center transition-colors duration-200 ease-out">
+          <div className="bg-blue-600 p-4 grid grid-cols-3 hover:bg-purple-600 border border-black dark:border-white text-white h-40 w-full justify-center transition-colors duration-200 ease-out">
             <div className="flex flex-col w-full col-span-2 space-y-4">
               <div className="flex-1">
                 Guess from a random mix of Webtoons, Manga, and Manhwa!
@@ -56,7 +77,7 @@ export default function Home() {
           as={"/play-daily"}
           className="group w-full mt-4 transition duration-300"
         >
-          <div className="bg-blue-600 p-4 grid grid-cols-3 hover:bg-purple-600 border border-black dark:border-white text-white h-fit md:h-40 w-full justify-center transition-colors duration-200 ease-out">
+          <div className="bg-blue-600 p-4 grid grid-cols-3 hover:bg-purple-600 border border-black dark:border-white text-white h-40 w-full justify-center transition-colors duration-200 ease-out">
             <div className="flex flex-col w-full col-span-2 space-y-4">
               <div className="flex-1">
                 Daily Challenge – A New Comic to Guess Every Day!
@@ -77,6 +98,22 @@ export default function Home() {
           </div>
         </Link>
       </div>
+      <header className=" m-24 md:m-36 max-w-5xl ">
+        <h1 className=" text-5xl md:text-7xl font-extrabold tracking-tight text-center">
+          How <span className="text-blue-600">to play</span>
+        </h1>
+      </header>
+      <section className=" relative w-full max-w-5xl flex justify-around gap-12 p-4 items-center flex-col">
+        <div
+          // ref={lineRef}
+          className="absolute h-full w-1 bg-red-500 grow-timeline"
+        ></div>
+        <div className="h-40 w-full bg-yellow-300"></div>
+        <div className="h-40 w-full bg-yellow-300"></div>
+        <div className="h-40 w-full bg-yellow-300"></div>
+        <div className="h-40 w-full bg-yellow-300"></div>
+        <div className="h-40 w-full bg-yellow-300"></div>
+      </section>
     </main>
   );
 }

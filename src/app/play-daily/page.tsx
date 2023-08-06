@@ -14,7 +14,8 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 
 const getDaily = async () => {
   let supabase = createClientComponentClient();
-
+console.log(process.env.NEXT_PUBLIC_SUPABASE_URL);
+console.log(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   let { data } = await supabase.from("Daily").select("day,comic");
   console.log(data);
   return data;
