@@ -192,7 +192,7 @@ export default function Play() {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
           {isVisible && lives != 0 && <Confetti />}
-          {isVisible && (
+          {isVisible && lives != 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 You win 🎉

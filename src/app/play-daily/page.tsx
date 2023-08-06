@@ -135,21 +135,7 @@ export default function Play() {
           <ColorSwitcher />
         </div>
       </nav>
-      {openModal && (
-        <Modal>
-          <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
-            Nice!
-          </h1>
-          <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
-            Your score:
-          </h3>
-          <Link href="/" as={"/"}>
-            <button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-              Back
-            </button>
-          </Link>
-        </Modal>
-      )}
+
       {loading && (
         <div className="mt-10 flex flex-col items-center">
           <h1>{date}</h1>
@@ -188,6 +174,36 @@ export default function Play() {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
           {isVisible && lives != 0 && <Confetti />}
+          {isVisible && lives != 0 && (
+            <Modal>
+              <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
+                Nice! 😎
+              </h1>
+              <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
+                The answer is {answer?.title}. Come back tommorow for more
+              </h3>
+              <Link href="/" as={"/"}>
+                <button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Back
+                </button>
+              </Link>
+            </Modal>
+          )}{" "}
+          {isVisible && lives == 0 && (
+            <Modal>
+              <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
+                You lose!🗿
+              </h1>
+              <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
+                The answer is {answer?.title}. Come back tommorow for more
+              </h3>
+              <Link href="/" as={"/"}>
+                <button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
+                  Back
+                </button>
+              </Link>
+            </Modal>
+          )}
         </section>
       )}
     </main>
