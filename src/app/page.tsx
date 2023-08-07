@@ -13,7 +13,13 @@ import { VoteItem } from "@/utils/type";
 
 export default function Home() {
   const [isUpdating, setIsUpdating] = useState(false);
-  const [clicked, setclicked] = useState<VoteItem>({});
+  const [clicked, setclicked] = useState<VoteItem>({
+    love: false,
+    fire: false,
+    meh: false,
+    chad: false,
+    angry: false,
+  });
   const [voteCount, setvoteCount] = useState<VoteItem>({
     love: 0,
     fire: 0,
@@ -95,7 +101,9 @@ export default function Home() {
   }, []);
   useEffect(() => {
     const voted = JSON.parse(getVoteItem("vote"));
-    setclicked(voted);
+    if (voted != null) {
+      setclicked(voted);
+    }
   }, []);
 
   return (
