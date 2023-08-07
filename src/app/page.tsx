@@ -2,21 +2,60 @@
 import { ColorSwitcher } from "@/components/ColorSwitch";
 import { motion, useIsPresent } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect, useState, SetStateAction } from "react";
 import Image from "next/image";
 import picture from "../../public/download.jpeg";
-import meme1 from "../../public/meme2.gif";
-import meme2 from "../../public/meme.gif";
+import { NanaQuipping, KomiQuipping } from "@/components/QuippingCharaters";
 import chad from "../../public/chad.png";
+import { getVoteItem, setVoteItem } from "@/utils/Action";
+import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { VoteItem } from "@/utils/type";
 
 export default function Home() {
-  const [clicked, setclicked] = useState({
-    love: false,
-    fire: false,
-    meh: false,
-    chad: false,
-    angry: false,
+  const voted = JSON.parse(getVoteItem("vote"));
+
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [clicked, setclicked] = useState<VoteItem>({
+    love: voted.love,
+    fire: voted.fire,
+    meh: voted.meh,
+    chad: voted.chad,
+    angry: voted.angry,
   });
+  const [voteCount, setvoteCount] = useState<VoteItem>({
+    love: 5,
+    fire: 5,
+    meh: 5,
+    chad: 5,
+    angry: 5,
+  });
+
+  const handleVoteClick = (type: string) => {
+    if (isUpdating) return; // Ignore clicks while updating
+
+    setIsUpdating(true); // Set updating flag
+
+    const newClicked = { ...clicked, [type]: !clicked[type] };
+    setclicked(newClicked);
+    setVoteItem("vote", newClicked);
+
+    if (clicked[type]) {
+      setvoteCount((prev) => {
+        setReactions({ ...prev, [type]: prev[type] - 1 });
+        return { ...prev, [type]: prev[type] - 1 };
+      });
+    } else {
+      setvoteCount((prev) => {
+        setReactions({ ...prev, [type]: prev[type] + 1 });
+        return { ...prev, [type]: prev[type] + 1 };
+      });
+    }
+
+    // Reset updating flag after a short delay
+    setTimeout(() => setIsUpdating(false), 500);
+  };
+
+  // ...
 
   const lineRef = useRef<HTMLDivElement>(null); // Specify the type here
   useEffect(() => {
@@ -39,6 +78,28 @@ export default function Home() {
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+  useEffect(() => {
+    getReactions().then((data) => {
+      if (data) setvoteCount(data[0]);
+    });
+  }, []);
+  useEffect(() => {
+    const supabase = createClientComponentClient();
+    const Reactions = supabase
+      .channel("custom-update-channel")
+      .on(
+        "postgres_changes",
+        { event: "UPDATE", schema: "public", table: "Reactions" },
+        (payload) => {
+          if (payload) setvoteCount(payload.new);
+          console.log("Change received!", payload);
+        }
+      )
+      .subscribe();
+    return () => {
+      supabase.removeChannel(Reactions);
+    };
   }, []);
 
   return (
@@ -214,13 +275,11 @@ export default function Home() {
                 clicked.love && "bg-blue-600 text-slate-100 "
               } hover:bg-purple-600 hover:text-slate-100  p-2 flex flex-col items-center gap-2 rounded-md`}
               data-clicked={clicked.love}
-              onClick={() => {
-                console.log(clicked);
-                setclicked((prev) => ({ ...prev, love: !prev.love }));
-              }}
+              onClick={() => handleVoteClick("love")}
+              disabled={isUpdating}
             >
               <Image
-                alt=""
+                alt="Heart-emoji"
                 src="https://img.icons8.com/cotton/64/like--v1.png"
                 width="20"
                 height="20"
@@ -229,7 +288,7 @@ export default function Home() {
                 loading="lazy"
                 style={{ color: "transparent;" }}
               />
-              <span>115</span>
+              <span>{voteCount.love}</span>
             </button>
             <button
               aria-label={`${
@@ -239,13 +298,10 @@ export default function Home() {
                 clicked.fire && "bg-blue-600 text-slate-100 "
               } hover:bg-purple-600 hover:text-slate-100  p-2 flex flex-col items-center gap-2 rounded-md`}
               data-clicked={clicked.fire}
-              onClick={() => {
-                console.log(clicked);
-                setclicked((prev) => ({ ...prev, fire: !prev.fire }));
-              }}
+              onClick={() => handleVoteClick("fire")}
             >
               <Image
-                alt="Heart-emoji"
+                alt="Fire-emoji"
                 src="https://img.icons8.com/emoji/48/fire.png"
                 width="20"
                 height="20"
@@ -254,7 +310,7 @@ export default function Home() {
                 loading="lazy"
                 style={{ color: "transparent;" }}
               />
-              <span>115</span>
+              <span>{voteCount.fire}</span>
             </button>
             <button
               aria-label={`${
@@ -264,10 +320,7 @@ export default function Home() {
                 clicked.meh && "bg-blue-600 text-slate-100 "
               } hover:bg-purple-600 hover:text-slate-100  p-2 flex flex-col items-center gap-2 rounded-md`}
               data-clicked={clicked.meh}
-              onClick={() => {
-                console.log(clicked);
-                setclicked((prev) => ({ ...prev, meh: !prev.meh }));
-              }}
+              onClick={() => handleVoteClick("meh")}
             >
               <Image
                 alt="meh-emoji"
@@ -279,7 +332,7 @@ export default function Home() {
                 loading="lazy"
                 style={{ color: "transparent;" }}
               />
-              <span>115</span>
+              <span>{voteCount.meh}</span>
             </button>
             <button
               aria-label={`${
@@ -289,10 +342,7 @@ export default function Home() {
                 clicked.angry && "bg-blue-600 text-slate-100 "
               } hover:bg-purple-600 hover:text-slate-100  p-2 flex flex-col items-center gap-2 rounded-md`}
               data-clicked={clicked.angry}
-              onClick={() => {
-                console.log(clicked);
-                setclicked((prev) => ({ ...prev, angry: !prev.angry }));
-              }}
+              onClick={() => handleVoteClick("angry")}
             >
               <Image
                 alt="face-with-symbols-on-mouth"
@@ -304,7 +354,7 @@ export default function Home() {
                 loading="lazy"
                 style={{ color: "transparent;" }}
               />
-              <span>115</span>
+              <span>{voteCount.angry}</span>
             </button>
             <button
               aria-label={`${
@@ -314,10 +364,7 @@ export default function Home() {
                 clicked.chad && "bg-blue-600 text-slate-100 "
               } hover:bg-purple-600 hover:text-slate-100  p-2 flex flex-col items-center gap-2 rounded-md`}
               data-clicked={clicked.chad}
-              onClick={() => {
-                console.log(clicked);
-                setclicked((prev) => ({ ...prev, chad: !prev.chad }));
-              }}
+              onClick={() => handleVoteClick("chad")}
             >
               <Image
                 alt="face-with-symbols-on-mouth"
@@ -329,12 +376,12 @@ export default function Home() {
                 loading="lazy"
                 style={{ color: "transparent;" }}
               />
-              <span>115</span>
+              <span>{voteCount.chad}</span>
             </button>
           </div>
           <div className="hidden md:block">
             <NanaQuipping />
-          </div>{" "}
+          </div>
         </div>
       </section>
       <footer className="flex items-center justify-center">
@@ -344,70 +391,20 @@ export default function Home() {
   );
 }
 
-const NanaQuipping = () => {
-  const [quipIndex, setQuipIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(true);
+const getReactions = async () => {
+  let supabase = createClientComponentClient();
 
-  const quips = [
-    "Did you know that honey never spoils? Just like my love for my friends, it lasts forever! 🍯",
-    "I tried cooking for the first time today. Let's just say the fire department and I are now on a first-name basis! 🔥",
-    "A group of flamingos is called a 'flamboyance.' I think I've found my spirit animal! 💃",
-    "I tried to catch some fog today, but I mist! Get it? Mist? I crack myself up! 🌫️",
-    "Wombat poop is cube-shaped! Nature sure has a weir sense of humor, doesn't it? 💩",
-    "Did you know that the human brain uses the same amount of power as a 10-watt light bulb?  So keep yours shining bright by studying hard! 💡",
-    "A group of owls is called a 'parliament.' Just like us quintuplets, they must have a lot to discuss! 🦉",
-    "I heard that a snail can sleep for three years. I wish I could do that, especially during exam season! 🐌",
-    "A single strand of spaghetti is called a 'spaghetto.' It's funny how something so simple can have such a fancy name, isn't it? 🍝",
-  ];
+  let { data } = await supabase.from("Reactions").select("*");
+  return data;
+};
+const setReactions = async (info: any) => {
+  let supabase = createClientComponentClient();
 
-  useEffect(() => {
-    const changeQuip = () => {
-      setIsVisible(false);
-      setTimeout(() => {
-        setQuipIndex((prevIndex) => (prevIndex + 1) % quips.length);
-        setIsVisible(true);
-      }, 5000);
-    };
-
-    const interval = setInterval(changeQuip, 10000);
-
-    return () => clearInterval(interval);
-  }, []);
-
-  return (
-    <div className="relative flex items-center">
-      <Image className="gif" src={meme2} height={50} width={50} alt={"pic"} />
-      <div className={`speech-box ${isVisible ? "" : "fade-out"}`}>
-        <div className="speech-bubble absolute left-[60px] top-[-10px] bg-white text-black p-2 rounded-md shadow-md">
-          <p>{quips[quipIndex]}</p>
-        </div>
-      </div>
-    </div>
-  );
+  const { data, error } = await supabase
+    .from("Reactions")
+    .update(info)
+    .eq("id", 1);
+  return data ? data : error;
 };
 
-const KomiQuipping = () => {
-  const [quipIndex, setQuipIndex] = useState(0);
-  const [isVisible, setIsVisible] = useState(false);
 
-  const quips = ["💃🏼", "❤️", "🤭", "🗿", "😒", "👉🏼🚪"];
-
-  const handleClick = () => {
-    setIsVisible(true);
-    setQuipIndex((prevIndex) => (prevIndex + 1) % quips.length);
-    setTimeout(() => {
-      setIsVisible(false);
-    }, 4000);
-  };
-
-  return (
-    <div className="relative flex items-center" onClick={handleClick}>
-      <div className={`speech-box ${isVisible ? "" : "fade-out"}`}>
-        <div className="overflow-scroll w-12 absolute right-[60px] top-[-10px] bg-white text-black p-2 rounded-md shadow-md">
-          <p className="text-center">{quips[quipIndex]}</p>
-        </div>
-      </div>
-      <Image className="gif" src={meme1} height={50} width={50} alt={"pic"} />
-    </div>
-  );
-};

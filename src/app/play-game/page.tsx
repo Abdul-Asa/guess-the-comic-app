@@ -16,8 +16,7 @@ import Spinner from "@/components/Spinner";
 
 export default function Play() {
   const router = useRouter();
-  const isPresent = useIsPresent();
-  const pathname = usePathname();
+
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
   const [guesses, setGuesses] = useState<DataItem[]>([]);

@@ -27,6 +27,12 @@ export interface DataItem {
   alt_titles: [];
   country: any;
 }
+
+
+export interface VoteItem {
+  [key: string]: any;
+}
+
 //Choose random comic with higher probability of choosing more popular manhwas
 export function getRandomElement(array: any[]) {
   // Error check to ensure array is valid
