@@ -12,22 +12,14 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { VoteItem } from "@/utils/type";
 
 export default function Home() {
-  const voted = JSON.parse(getVoteItem("vote"));
-
   const [isUpdating, setIsUpdating] = useState(false);
-  const [clicked, setclicked] = useState<VoteItem>({
-    love: voted.love,
-    fire: voted.fire,
-    meh: voted.meh,
-    chad: voted.chad,
-    angry: voted.angry,
-  });
+  const [clicked, setclicked] = useState<VoteItem>({});
   const [voteCount, setvoteCount] = useState<VoteItem>({
-    love: 5,
-    fire: 5,
-    meh: 5,
-    chad: 5,
-    angry: 5,
+    love: 0,
+    fire: 0,
+    meh: 0,
+    chad: 0,
+    angry: 0,
   });
 
   const handleVoteClick = (type: string) => {
@@ -100,6 +92,10 @@ export default function Home() {
     return () => {
       supabase.removeChannel(Reactions);
     };
+  }, []);
+  useEffect(() => {
+    const voted = JSON.parse(getVoteItem("vote"));
+    setclicked(voted);
   }, []);
 
   return (
@@ -270,7 +266,7 @@ export default function Home() {
             <button
               aria-label={`${
                 clicked.love ? "Heart selected" : "Heart not selected"
-              }?`}
+              }`}
               className={`btn border border-black dark:border-white ${
                 clicked.love && "bg-blue-600 text-slate-100 "
               } hover:bg-purple-600 hover:text-slate-100  p-2 flex flex-col items-center gap-2 rounded-md`}

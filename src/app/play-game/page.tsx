@@ -186,7 +186,11 @@ export default function Play() {
           <h1 className=" m-4">Guess {7 - lives >= 7 ? 6 : 7 - lives} of 6</h1>
           <InputDropdown options={list} callback={handleOptionSelected} />
           <AnimatedDiv guessList={guesses} answer={answer} />
-          <Link href="/" className="group mt-4 transition duration-300">
+          <Link
+            href="/"
+            as={"/"}
+            className="group mt-4 transition duration-300"
+          >
             Home
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
