@@ -6,8 +6,6 @@ html {
   scroll-timeline: --page-scroll block;
 }
 
-
-
 /* Define your color scheme for light mode */
 @media (prefers-color-scheme: light) {
   :root {
@@ -26,11 +24,10 @@ html {
 
 * {
   --black: #222222;
-  --white: #EBEBEB;
+  --white: #ebebeb;
   --gray: #adadad;
   --blue: #1000bb;
 }
-
 
 footer {
   animation: show-footer 2s linear;
@@ -38,11 +35,7 @@ footer {
   animation-range: entry;
   /* position: relative; */
   width: 100%;
-  bottom: 0;
-  height: 5%;
-}
-main{
- height: 300vh;
+  height: 4rem;
 }
 
 @supports (animation-timeline: view()) {
@@ -63,11 +56,10 @@ main{
   }
 
   .grow-timeline {
-    transform-origin: start;
+    transform-origin: top;
     transition: height 0.3s ease;
     height: var(--line-height);
   }
-  
 }
 
 @keyframes animate-in {
@@ -142,7 +134,6 @@ body {
   --yellow: #ffbb00;
 
   --accent: var(--purple);
-
 }
 
 * {
@@ -165,7 +156,6 @@ body {
     opacity: 1;
     transform: translateY(0);
   }
-
 }
 
 .privacy-screen {
@@ -190,55 +180,133 @@ body {
   background-color: var(--purple);
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
-          animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
+  animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
 }
 
 .sk-cube-grid .sk-cube1 {
   -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
+  animation-delay: 0.2s;
+}
 .sk-cube-grid .sk-cube2 {
   -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s; }
+  animation-delay: 0.3s;
+}
 .sk-cube-grid .sk-cube3 {
   -webkit-animation-delay: 0.4s;
-          animation-delay: 0.4s; }
+  animation-delay: 0.4s;
+}
 .sk-cube-grid .sk-cube4 {
   -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s; }
+  animation-delay: 0.1s;
+}
 .sk-cube-grid .sk-cube5 {
   -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
+  animation-delay: 0.2s;
+}
 .sk-cube-grid .sk-cube6 {
   -webkit-animation-delay: 0.3s;
-          animation-delay: 0.3s; }
+  animation-delay: 0.3s;
+}
 .sk-cube-grid .sk-cube7 {
   -webkit-animation-delay: 0s;
-          animation-delay: 0s; }
+  animation-delay: 0s;
+}
 .sk-cube-grid .sk-cube8 {
   -webkit-animation-delay: 0.1s;
-          animation-delay: 0.1s; }
+  animation-delay: 0.1s;
+}
 .sk-cube-grid .sk-cube9 {
   -webkit-animation-delay: 0.2s;
-          animation-delay: 0.2s; }
+  animation-delay: 0.2s;
+}
 
 @-webkit-keyframes sk-cubeGridScaleDelay {
-  0%, 70%, 100% {
+  0%,
+  70%,
+  100% {
     -webkit-transform: scale3D(1, 1, 1);
-            transform: scale3D(1, 1, 1);
-  } 35% {
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
     -webkit-transform: scale3D(0, 0, 1);
-            transform: scale3D(0, 0, 1); 
+    transform: scale3D(0, 0, 1);
   }
 }
 
 @keyframes sk-cubeGridScaleDelay {
-  0%, 70%, 100% {
+  0%,
+  70%,
+  100% {
     -webkit-transform: scale3D(1, 1, 1);
-            transform: scale3D(1, 1, 1);
-  } 35% {
+    transform: scale3D(1, 1, 1);
+  }
+  35% {
     -webkit-transform: scale3D(0, 0, 1);
-            transform: scale3D(0, 0, 1);
-  } 
+    transform: scale3D(0, 0, 1);
+  }
 }
 
+@keyframes reveal {
+  from {
+    opacity: 0;
+    clip-path: inset(45% 20% 45% 20%);
+  }
+  to {
+    opacity: 1;
+    clip-path: inset(0% 0% 0% 0%);
+  }
+}
+.revealing-image {
+  /* Create View Timeline */
+  view-timeline-name: --revealing-image;
+  view-timeline-axis: block;
 
+  /* Attach animation, linked to the  View Timeline */
+  animation: linear reveal both;
+  animation-timeline: --revealing-image;
+
+  /* Tweak range when effect should run*/
+  animation-range: entry 25% cover 50%;
+}
+
+.circle {
+  width: 30px;
+  height: 30px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background-color: var(--yellow);
+  position: relative;
+}
+
+.btn {
+  transition: ease-in-out all 0.1s;
+  transform: scale(1);
+}
+
+.btn:active {
+  transform: scale(1.2);
+}
+
+.speech-box {
+  opacity: 1;
+  transition: opacity 1s ease-in-out;
+}
+
+.fade-out {
+  opacity: 0;
+}
+.speech-bubble{
+  max-width: 200px;
+  overflow: scroll;
+  max-height: 150px;
+}
+
+@media only screen and (min-width: 1024px) {
+  .speech-bubble{
+    width: 160px;
+    overflow: scroll;
+    max-height: 150px;
+  }
+}

@@ -11,6 +11,11 @@ const nextConfig = {
         hostname: "meo.comick.pictures",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "img.icons8.com",
+        port: "",
+      },
     ],
   },
 };
