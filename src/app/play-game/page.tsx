@@ -16,6 +16,7 @@ import Spinner from "@/components/Spinner";
 
 export default function Play() {
   const router = useRouter();
+  let height = document.body.scrollHeight;
 
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
@@ -194,7 +195,7 @@ export default function Play() {
             Home
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
-          {isVisible && lives != 0 && <Confetti />}
+          {isVisible && lives != 0 && <Confetti height={height} />}
           {isVisible && lives != 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">

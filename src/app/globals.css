@@ -310,3 +310,31 @@ body {
     max-height: 150px;
   }
 }
+.marker {
+  position: relative;
+  text-decoration: none;
+  line-height: 1em;
+  & svg {
+    position: absolute;
+    left: 0;
+    top: -50%;
+    right: 0; 
+    margin-left: auto; 
+    margin-right: auto; 
+    pointer-events: none;   
+  }
+  & path {
+    transition: stroke-dashoffset 300ms linear;
+    stroke-width: 1.0;
+    stroke: var(--purple);
+    fill: none;
+    stroke-linecap: round;
+  }
+  &:hover path{
+    stroke-dashoffset: 0;
+  } 
+}
+
+.fu{
+  background-color: var(--purple);
+}
