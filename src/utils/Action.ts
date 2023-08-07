@@ -1,5 +1,9 @@
 export const getVoteItem = (key: string): any | null => {
-  const item = localStorage.getItem(key);
+ let item;
+  if (typeof window !== 'undefined') {
+  // Perform localStorage action
+ item = localStorage.getItem(key);
+} 
   return item ? item : null;
 };
 
@@ -7,5 +11,6 @@ export const setVoteItem = (
   key: string,
   value: Record<string, boolean>
 ): void => {
-  localStorage.setItem(key, JSON.stringify(value));
+    if (typeof window !== 'undefined') {
+  localStorage.setItem(key, JSON.stringify(value));}
 };
