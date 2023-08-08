@@ -46,7 +46,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <meta property="og:image" content="../../public/og.png" />
+      <meta
+        property="og:image"
+        content="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-yaqwt&psig=AOvVaw2nFIzVfbuwFe_wsCWtuuzF&ust=1691609049070000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMjh7fXkzYADFQAAAAAdAAAAABAE"
+      />
+      <meta
+        property="twitter:image"
+        content="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pngwing.com%2Fen%2Ffree-png-yaqwt&psig=AOvVaw2nFIzVfbuwFe_wsCWtuuzF&ust=1691609049070000&source=images&cd=vfe&opi=89978449&ved=0CBEQjRxqFwoTCMjh7fXkzYADFQAAAAAdAAAAABAE"
+      />
+
       <body className={`duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Client>
