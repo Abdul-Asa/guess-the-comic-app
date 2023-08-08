@@ -2,7 +2,8 @@ import "./globals.css";
 import "../styles/font.css";
 import { ThemeProvider } from "./theme-provider";
 import Client from "./animate-wrapper";
-// import cardImage from "../../public/download.png";
+import { Analytics } from "@vercel/analytics/react";
+
 const meta = {
   title: "Guess the comic",
   description: "Big webcomic fan? Come and test out your skills",
@@ -47,7 +48,10 @@ export default function RootLayout({
     <html lang="en">
       <body className={`duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <Client>{children}</Client>
+          <Client>
+            {children}
+            <Analytics />
+          </Client>
         </ThemeProvider>
       </body>
     </html>
