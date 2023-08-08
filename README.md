@@ -34,10 +34,17 @@ Want to contribute? Awesome! Help us with the challenge feature or report bugs. 
 
 ## Contact 💌
 
-Have ideas, suggestions, or just want to say "cool website"? Reach out to us:
+Have ideas, suggestions, or just want to say "cool website"? Feel free to reach out:
 
 - [LinkedIn](https://www.linkedin.com/in/abdullah-shehu)
 - [GitHub](https://github.com/Abdul-Asa)
 - [Discord](https://discord.com/channels/860696481837350912/860708414854266882)
 
 Feel free to make any adjustments or let me know if you need anything else. Happy gaming! 🌟
+---
+### Things to fix
+- Inconsistent theme toggle button
+- Remove comics with null values
+- Fix modals on play-daily page
+- Speed up/remove laggy page transitions
+- Seperate play again and change preference settings
