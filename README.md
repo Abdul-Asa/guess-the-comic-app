@@ -1,34 +1,43 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Guess the Comic 🎨📚
 
-## Getting Started
+**Guess the Comic**, the most exciting guessing game for all web comic enthusiasts! Dive into a world filled with Webtoons, Manga, and Manhwa, and test your knowledge. Can you guess them all? 🧩
 
-First, run the development server:
+## Features 🚀
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Random Play 🎲
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Choose your criteria and guess from a random mix of comics. How many can you get right?
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Play Daily 📅
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Join the daily challenge where a chosen comic awaits you every day. Keep track of your wins and streaks. Can you keep the winning streak alive?
 
-## Learn More
+### Challenge Feature (Coming Soon) 🔥
 
-To learn more about Next.js, take a look at the following resources:
+Get ready to challenge your friends in a thrilling comic duel. Stay tuned!
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Technology Stack 💻
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+Built with love using:
 
-## Deploy on Vercel
+- Next.js 13
+- Tailwind CSS
+- Supabase
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contributions 🤝
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Want to contribute? Awesome! Help us with the challenge feature or report bugs. Just send a GitHub PR or open an issue. Your contributions are always welcome!
+
+## Screenshots 📸
+
+![Gameplay](./public/gif1.gif)
+
+## Contact 💌
+
+Have ideas, suggestions, or just want to say "cool website"? Reach out to us:
+
+- [LinkedIn](https://www.linkedin.com/in/abdullah-shehu)
+- [GitHub](https://github.com/Abdul-Asa)
+- [Discord](https://discord.com/channels/860696481837350912/860708414854266882)
+
+Feel free to make any adjustments or let me know if you need anything else. Happy gaming! 🌟
