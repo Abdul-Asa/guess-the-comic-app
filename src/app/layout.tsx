@@ -15,7 +15,7 @@ const meta = {
 export const metadata = {
   title: meta.title,
   description: meta.description,
-  cardImage: meta.cardImage,
+  cardImage: cardImage,
   robots: meta.robots,
   favicon: meta.favicon,
   url: meta.url,
@@ -24,7 +24,7 @@ export const metadata = {
     url: meta.url,
     title: meta.title,
     description: meta.description,
-    cardImage: meta.cardImage,
+    cardImage: cardImage,
     type: meta.type,
     site_name: meta.title,
   },
@@ -33,7 +33,7 @@ export const metadata = {
     site: "@AbdullahShehu1",
     title: meta.title,
     description: meta.description,
-    cardImage: meta.cardImage,
+    cardImage: cardImage,
   },
 };
 
