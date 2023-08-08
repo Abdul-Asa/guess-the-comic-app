@@ -6,6 +6,7 @@ interface FetchDataProps {
 }
 
 export const fetchData = async ({ countries, trending }: FetchDataProps) => {
+  console.log(process.env.NODE_ENV);
   const fetchPromises: Promise<any>[] = [];
   let num = trending === "All" ? 11 : 3;
 
@@ -18,7 +19,7 @@ export const fetchData = async ({ countries, trending }: FetchDataProps) => {
     // Fetch data for each country
     countryCodes.forEach((countryCode) => {
       const fetchPromise = fetch(
-        `https://api.comick.app/v1.0/search?country=${countryCode}&limit=300&page=${i}`
+        `${process.env.API_CODE}?country=${countryCode}&limit=300&page=${i}`
       )
         .then((response) => response.json())
         .then((data) => {

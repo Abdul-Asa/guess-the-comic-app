@@ -21,8 +21,8 @@ const getDaily = async () => {
 };
 
 export default function Play() {
-  const height = document.body.scrollHeight;
-  const width = document.body.scrollWidth;
+ 
+  const [dimensions, setDimensions] = useState({ height: 200, width: 200 });
 
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
@@ -194,6 +194,13 @@ export default function Play() {
     }
   }, []);
 
+  useEffect(() => {
+    setDimensions({
+      height: document.body.scrollHeight,
+      width: document.body.scrollWidth,
+    });
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col items-center px-6 md:px-24">
       <nav id="navbar" className=" w-full flex justify-center sticky  ">
@@ -261,7 +268,7 @@ export default function Play() {
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
           {isVisible && lives != 0 && (
-            <Confetti height={height} width={width} />
+            <Confetti height={dimensions.height} width={dimensions.width} />
           )}
           {isVisible && lives != 0 && (
             <Modal>
