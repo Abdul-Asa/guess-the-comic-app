@@ -13,7 +13,8 @@ import Link from "next/link";
 import { useIsPresent, motion } from "framer-motion";
 import { ColorSwitcher } from "@/components/ColorSwitch";
 import Spinner from "@/components/Spinner";
-import logo from "../../public/download.png";
+import logo from "../../../public/download.png";
+
 
 export default function Play() {
   const router = useRouter();

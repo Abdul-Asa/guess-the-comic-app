@@ -12,7 +12,7 @@ import { ColorSwitcher } from "@/components/ColorSwitch";
 import Spinner from "@/components/Spinner";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getKeyItem, setKeyItem } from "@/utils/Action";
-import logo from "../../public/download.png";
+import logo from "../../../public/download.png";
 
 const getDaily = async () => {
   let supabase = createClientComponentClient();
