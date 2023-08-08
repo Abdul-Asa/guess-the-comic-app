@@ -46,6 +46,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <meta property="og:image" content="../../public/og.png" />
       <body className={`duration-300`}>
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           <Client>
