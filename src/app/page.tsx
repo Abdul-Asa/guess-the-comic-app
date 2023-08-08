@@ -205,7 +205,7 @@ export default function Home() {
             ref={lineRef}
             className="absolute flex-col justify-between w-2 top-0 hidden lg:flex  bg-custom-black dark:bg-custom-gray grow-timeline"
           />
-          <div className=" w-full flex justify-between flex-col md:flex-row ">
+          <div className=" w-full flex justify-between gap-8 flex-col items-center md:flex-row ">
             <Image
               className="revealing-image border"
               src={gif1}
@@ -221,7 +221,7 @@ export default function Home() {
               </h2>
             </div>
           </div>
-          <div className="w-full flex justify-between flex-col md:flex-row-reverse ">
+          <div className=" w-full flex justify-between gap-8 flex-col items-center md:flex-row-reverse ">
             <Image
               className="revealing-image border"
               src={gif2}
@@ -229,7 +229,7 @@ export default function Home() {
               width={400}
               alt={"pic"}
             />
-            <div className="max-w-sm flex flex-col h-auto justify-center come-in">
+            <div className="max-w-sm flex flex-col h-auto justify-center text-center md:text-left come-in">
               <h1 className="text-3xl">Play Daily</h1>
               <h2 className="font-bold">
                 Every day, a new comic (manhwa only) is featured for you to
@@ -237,7 +237,7 @@ export default function Home() {
               </h2>{" "}
             </div>
           </div>
-          <div className="w-full flex justify-between flex-col md:flex-row ">
+          <div className=" w-full flex justify-between gap-8 flex-col items-center md:flex-row ">
             <Image
               className="revealing-image border border-black"
               src={gif3}
@@ -245,7 +245,7 @@ export default function Home() {
               width={400}
               alt={"pic"}
             />
-            <div className="max-w-sm flex flex-col h-auto justify-center come-in">
+            <div className="max-w-sm flex flex-col h-auto justify-center text-center md:text-left come-in">
               <h1 className="text-3xl">Play Challenge – Coming Soon!</h1>
               <h2 className="font-bold">
                 Find out who has the better knowledge between you and your
