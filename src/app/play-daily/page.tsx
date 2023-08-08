@@ -11,25 +11,33 @@ import Link from "next/link";
 import { ColorSwitcher } from "@/components/ColorSwitch";
 import Spinner from "@/components/Spinner";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
+import { getKeyItem, setKeyItem } from "@/utils/Action";
+import logo from "../../public/download.png";
 
 const getDaily = async () => {
   let supabase = createClientComponentClient();
-console.log(process.env.NEXT_PUBLIC_SUPABASE_URL);
-console.log(process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY);
   let { data } = await supabase.from("Daily").select("day,comic");
-  console.log(data);
   return data;
 };
 
 export default function Play() {
+  const height = document.body.scrollHeight;
+  const width = window.innerWidth;
+
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
   const [guesses, setGuesses] = useState<DataItem[]>([]);
-  const [openModal, setopenModal] = useState(true);
   const [blur, setblur] = useState<boolean>(true);
   const [isVisible, setIsVisible] = useState(false);
   const [loading, setIsloading] = useState(true);
   const [lives, setLives] = useState<number>(6);
+  const [playerInfo, setplayerInfo] = useState({
+    today: false,
+    played: 0,
+    wins: 0,
+    streak: 0,
+    lastTime: getDate(),
+  });
 
   function getDate() {
     const today = new Date();
@@ -77,6 +85,7 @@ export default function Play() {
   const imageLoader = ({ src, width, quality }: ImageLoaderProps): string => {
     return `https://meo.comick.pictures/${src}?w=${width}&q=${quality || 100}`;
   };
+
   const handleOptionSelected = (option: DataItem): boolean => {
     console.log(option);
     setGuesses((prev) => [...prev, option]);
@@ -88,7 +97,25 @@ export default function Play() {
         behavior: "smooth",
       });
       setIsVisible(true);
+      if (!playerInfo.today) {
+        setplayerInfo((prev) => {
+          setKeyItem("daily", {
+            ...prev,
+            today: true,
+            played: prev.played + 1,
+            wins: prev.wins + 1,
+            streak: prev.streak + 1,
+          });
 
+          return {
+            ...prev,
+            today: true,
+            played: prev.played + 1,
+            wins: prev.wins + 1,
+            streak: prev.streak + 1,
+          };
+        });
+      }
       console.log("Game ends...you win 🎉");
     } else {
       setLives(lives - 1);
@@ -101,6 +128,23 @@ export default function Play() {
           behavior: "smooth",
         });
         setIsVisible(true);
+        if (!playerInfo.today) {
+          setplayerInfo((prev) => {
+            setKeyItem("daily", {
+              ...prev,
+              today: true,
+              played: prev.played + 1,
+              streak: 0,
+            });
+
+            return {
+              ...prev,
+              today: true,
+              played: prev.played + 1,
+              streak: 0,
+            };
+          });
+        }
       }
     }
     return option.title == answer?.title;
@@ -128,11 +172,45 @@ export default function Play() {
     loadPage();
   }, []);
 
+  useEffect(() => {
+    const test = JSON.parse(getKeyItem("daily"));
+    // console.log(test.lastTime, getDate());
+    if (test) {
+      if (test.lastTime != getDate()) {
+        setplayerInfo({ ...test, today: false });
+      } else {
+        setplayerInfo(test);
+      }
+    }
+
+    if (JSON.parse(getKeyItem("daily")) == null) {
+      setplayerInfo({
+        today: false,
+        played: 0,
+        wins: 0,
+        streak: 0,
+        lastTime: getDate(),
+      });
+    }
+  }, []);
+
   return (
     <main className="flex min-h-screen flex-col items-center px-6 md:px-24">
       <nav id="navbar" className=" w-full flex justify-center sticky  ">
         <div className=" come-in w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
-          <h2 className="">Logo</h2>
+          <a href="/">
+            <Image
+              alt="face-with-symbols-on-mouth"
+              src={logo}
+              width="20"
+              height="20"
+              decoding="async"
+              data-nimg="future"
+              loading="lazy"
+              style={{ color: "transparent;" }}
+            />
+          </a>
+
           <ColorSwitcher />
         </div>
       </nav>
@@ -182,12 +260,19 @@ export default function Play() {
             Home
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
-          {isVisible && lives != 0 && <Confetti />}
+          {isVisible && lives != 0 && (
+            <Confetti height={height} width={width} />
+          )}
           {isVisible && lives != 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 Nice! 😎
               </h1>
+              <ol>
+                <li>Played: {playerInfo?.played}</li>
+                <li>Wins: {playerInfo?.wins}</li>
+                <li>Current streak: {playerInfo?.streak}</li>
+              </ol>
               <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 The answer is {answer?.title}. Come back tommorow for more
               </h3>
@@ -203,6 +288,11 @@ export default function Play() {
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 You lose!🗿
               </h1>
+              <ol>
+                <li>Played: {playerInfo?.played}</li>
+                <li>Wins: {playerInfo?.wins}</li>
+                <li>Current streak: {playerInfo?.streak}</li>
+              </ol>
               <h3 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 The answer is {answer?.title}. Come back tommorow for more
               </h3>

@@ -297,6 +297,7 @@ body {
 .fade-out {
   opacity: 0;
 }
+
 .speech-bubble{
   max-width: 200px;
   overflow: scroll;
@@ -309,8 +310,10 @@ body {
     overflow: scroll;
     max-height: 150px;
   }
+  
 }
-.marker {
+
+ .marker {
   position: relative;
   text-decoration: none;
   line-height: 1em;
@@ -334,7 +337,6 @@ body {
     stroke-dashoffset: 0;
   } 
 }
-
 .fu{
   background-color: var(--purple);
 }

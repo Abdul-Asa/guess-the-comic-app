@@ -13,10 +13,12 @@ import Link from "next/link";
 import { useIsPresent, motion } from "framer-motion";
 import { ColorSwitcher } from "@/components/ColorSwitch";
 import Spinner from "@/components/Spinner";
+import logo from "../../public/download.png";
 
 export default function Play() {
   const router = useRouter();
-  let height = document.body.scrollHeight;
+  const height = document.body.scrollHeight;
+  const width = window.innerWidth;
 
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
@@ -126,7 +128,19 @@ export default function Play() {
     <main className="flex min-h-screen flex-col items-center px-6 md:px-24">
       <nav id="navbar" className=" w-full flex justify-center sticky  ">
         <div className=" come-in w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
-          <h2 className="">Logo</h2>
+          <a href="/">
+            <Image
+              alt="face-with-symbols-on-mouth"
+              src={logo}
+              width="20"
+              height="20"
+              decoding="async"
+              data-nimg="future"
+              loading="lazy"
+              style={{ color: "transparent;" }}
+            />
+          </a>
+
           <ColorSwitcher />
         </div>
       </nav>
@@ -195,7 +209,9 @@ export default function Play() {
             Home
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
-          {isVisible && lives != 0 && <Confetti height={height} />}
+          {isVisible && lives != 0 && (
+            <Confetti height={height} width={width} />
+          )}
           {isVisible && lives != 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">

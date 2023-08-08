@@ -1,30 +1,23 @@
 "use client";
 import { ColorSwitcher } from "@/components/ColorSwitch";
-import { motion, useIsPresent } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect, useState, SetStateAction } from "react";
+import { useRef, useEffect, useState } from "react";
 import Image from "next/image";
-import picture from "../../public/download.jpeg";
+import logo from "../../public/download.png";
+import gif1 from "../../public/gif1.gif";
+import gif2 from "../../public/gif2.gif";
+import gif3 from "../../public/ezgif.com-video-to-gif.gif";
 import { NanaQuipping, KomiQuipping } from "@/components/QuippingCharacters";
 import chad from "../../public/chad.png";
-import { getVoteItem, setVoteItem } from "@/utils/Action";
+import { getKeyItem, setKeyItem } from "@/utils/Action";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { VoteItem } from "@/utils/type";
 import Marker from "@/components/Hand-drawn-circle";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import twitter from "../../public/x-twitter.svg";
-import twitter2 from "../../public/twitter-x-seeklogo.com-4.svg";
-import { useTheme } from "next-themes";
-
-// import { faXTwitter } from "@fortawesome/react-fontawesome";
-// import { faXTwitter } from "@fortawesome/free-solid-svg-icons";
-// import { faXTwitter } from "@fortawesome/free-regular-svg-icons;
-// import { faXTwitter } from "@fortawesome/fontawesome-svg-core";
+import CopyToClipboard from "react-copy-to-clipboard";
 
 export default function Home() {
-  const { theme } = useTheme(); // Get the current theme
-
   const [isUpdating, setIsUpdating] = useState(false);
   const [clicked, setclicked] = useState<VoteItem>({
     love: false,
@@ -41,6 +34,7 @@ export default function Home() {
     angry: 0,
   });
   const notify = () => toast("Link copied to clipboard!");
+  const fullURL = typeof window !== "undefined" ? window.location.href : "";
 
   const handleVoteClick = (type: string) => {
     if (isUpdating) return; // Ignore clicks while updating
@@ -49,7 +43,7 @@ export default function Home() {
 
     const newClicked = { ...clicked, [type]: !clicked[type] };
     setclicked(newClicked);
-    setVoteItem("vote", newClicked);
+    setKeyItem("vote", newClicked);
 
     if (clicked[type]) {
       setvoteCount((prev) => {
@@ -66,8 +60,6 @@ export default function Home() {
     // Reset updating flag after a short delay
     setTimeout(() => setIsUpdating(false), 500);
   };
-
-  // ...
 
   const lineRef = useRef<HTMLDivElement>(null); // Specify the type here
   useEffect(() => {
@@ -114,7 +106,7 @@ export default function Home() {
     };
   }, []);
   useEffect(() => {
-    const voted = JSON.parse(getVoteItem("vote"));
+    const voted = JSON.parse(getKeyItem("vote"));
     if (voted != null) {
       setclicked(voted);
     }
@@ -130,7 +122,19 @@ export default function Home() {
         id="navbar"
         className=" w-full flex sticky come-in max-w-5xl justify-between items-center p-3 text-sm text-foreground"
       >
-        <h2 className="">Logo</h2>
+        <a href="/">
+          <Image
+            alt="face-with-symbols-on-mouth"
+            src={logo}
+            width="20"
+            height="20"
+            decoding="async"
+            data-nimg="future"
+            loading="lazy"
+            style={{ color: "transparent;" }}
+          />
+        </a>
+
         <ColorSwitcher />
       </nav>
       <header className=" m-24 md:m-36 max-w-5xl ">
@@ -196,61 +200,63 @@ export default function Home() {
             How <span className="text-blue-600">to play</span>
           </h1>
         </header>
-        <div className="relative w-full max-w-5xl cursor-pointer flex justify-around gap-12 p-4 items-center flex-col">
+        <div className="relative w-full max-w-5xl flex justify-around gap-12 p-4 items-center flex-col">
           <div
             ref={lineRef}
-            className="absolute flex-col justify-between w-2 top-0 hidden md:flex  bg-custom-black dark:bg-custom-gray grow-timeline"
+            className="absolute flex-col justify-between w-2 top-0 hidden lg:flex  bg-custom-black dark:bg-custom-gray grow-timeline"
           />
-
-          <div className="h-40 w-full flex justify-between come-in ">
+          <div className=" w-full flex justify-between  ">
             <Image
-              className="revealing-image"
-              src={picture}
-              height={90}
-              width={200}
+              className="revealing-image border"
+              src={gif1}
+              height={800}
+              width={400}
               alt={"pic"}
             />
-            <div>
-              <h1 className="self-center text-3xl text-center max-w-xs">
-                Choose your challenge
-              </h1>
-              <ul>
-                <li>Play random</li>
-                <li>Play Daily</li>
-              </ul>
+            <div className="max-w-sm flex flex-col h-auto justify-center come-in">
+              <h1 className="text-3xl">Play Random</h1>
+              <h2 className=" font-bold">
+                Choose your forte from a mix of Webtoons, Manga, Manhua and
+                Manhwa and try to get the answer in 6 tries
+              </h2>
             </div>
           </div>
-          <div className="h-40 w-full flex justify-between come-in flex-row-reverse ">
+          <div className="w-full flex justify-between  flex-row-reverse ">
             <Image
-              className="revealing-image"
-              src={picture}
-              height={90}
-              width={200}
+              className="revealing-image border"
+              src={gif2}
+              height={800}
+              width={400}
               alt={"pic"}
             />
-            <h1 className="self-center text-3xl text-center max-w-xs">
-              Make your 6 guesses count
-            </h1>
+            <div className="max-w-sm flex flex-col h-auto justify-center come-in">
+              <h1 className="text-3xl">Play Daily</h1>
+              <h2 className="font-bold">
+                Every day, a new comic (manhwa only) is featured for you to
+                guess. Make sure to visit regularly to keep your streak!
+              </h2>{" "}
+            </div>
           </div>
-          <div className="h-40 w-full flex justify-between come-in ">
+          <div className="w-full flex justify-between  flex-row ">
             <Image
-              className="revealing-image"
-              src={picture}
-              height={90}
-              width={200}
+              className="revealing-image border border-black"
+              src={gif3}
+              height={800}
+              width={400}
               alt={"pic"}
             />
-            <div>
-              <h1 className="self-center text-3xl text-center max-w-xs">
-                Challenge feature coming soon
-              </h1>
-              <h2>Find out who has the better knowledge</h2>
+            <div className="max-w-sm flex flex-col h-auto justify-center come-in">
+              <h1 className="text-3xl">Play Challenge – Coming Soon!</h1>
+              <h2 className="font-bold">
+                Find out who has the better knowledge between you and your
+                friends
+              </h2>
             </div>
           </div>
         </div>
         <h1 className="text-2xl md:text-4xl text-center max-w-3xl mt-16 mb-4">
-          Have ideas💡, suggestions🗳️, or comments📝? Want to simply say share
-          compliments? Feel free to reach out!
+          Have ideas 💡, suggestions 🗳️, or comments 📝? Want to simply say
+          share compliments? Feel free to reach out!
         </h1>
         <ul className="flex flex-row justify-evenly w-full mb-16">
           <a
@@ -262,8 +268,8 @@ export default function Home() {
               fill="currentColor"
               viewBox="0 0 24 24"
               xmlns="http://www.w3.org/2000/svg"
-              fill-rule="evenodd"
-              clip-rule="evenodd"
+              fillRule="evenodd"
+              clipRule="evenodd"
             >
               <path d="M19.54 0c1.356 0 2.46 1.104 2.46 2.472v21.528l-2.58-2.28-1.452-1.344-1.536-1.428.636 2.22h-13.608c-1.356 0-2.46-1.104-2.46-2.472v-16.224c0-1.368 1.104-2.472 2.46-2.472h16.08zm-4.632 15.672c2.652-.084 3.672-1.824 3.672-1.824 0-3.864-1.728-6.996-1.728-6.996-1.728-1.296-3.372-1.26-3.372-1.26l-.168.192c2.04.624 2.988 1.524 2.988 1.524-1.248-.684-2.472-1.02-3.612-1.152-.864-.096-1.692-.072-2.424.024l-.204.024c-.42.036-1.44.192-2.724.756-.444.204-.708.348-.708.348s.996-.948 3.156-1.572l-.12-.144s-1.644-.036-3.372 1.26c0 0-1.728 3.132-1.728 6.996 0 0 1.008 1.74 3.66 1.824 0 0 .444-.54.804-.996-1.524-.456-2.1-1.416-2.1-1.416l.336.204.048.036.047.027.014.006.047.027c.3.168.6.3.876.408.492.192 1.08.384 1.764.516.9.168 1.956.228 3.108.012.564-.096 1.14-.264 1.74-.516.42-.156.888-.384 1.38-.708 0 0-.6.984-2.172 1.428.36.456.792.972.792.972zm-5.58-5.604c-.684 0-1.224.6-1.224 1.332 0 .732.552 1.332 1.224 1.332.684 0 1.224-.6 1.224-1.332.012-.732-.54-1.332-1.224-1.332zm4.38 0c-.684 0-1.224.6-1.224 1.332 0 .732.552 1.332 1.224 1.332.684 0 1.224-.6 1.224-1.332 0-.732-.54-1.332-1.224-1.332z" />
             </svg>
@@ -312,12 +318,22 @@ export default function Home() {
         </ul>
         <h1 className="text-2xl md:text-4xl text-center max-w-3xl m-8">
           Enjoy guessing various comics and don't forget to
-          <Marker
-            style="text-blue-600 marker hover:cursor-pointer"
-            run={notify}
-          >
+          <Marker style="text-blue-600 hover:cursor-pointer" run={notify}>
             &nbsp; share &nbsp;
           </Marker>
+          <CopyToClipboard
+            text={fullURL}
+            onCopy={() => {
+              console.log({ copied: true, url: fullURL });
+            }}
+          >
+            <span
+              className={`inline-block md:hidden text-blue-600 hover:cursor-pointer`}
+              onClick={notify}
+            >
+              &nbsp;share&nbsp;
+            </span>
+          </CopyToClipboard>
           with your friends.
         </h1>
         <pre
@@ -382,7 +398,7 @@ export default function Home() {
                 decoding="async"
                 data-nimg="future"
                 loading="lazy"
-                style={{ color: "transparent;" }}
+                style={{ color: "transparent" }}
               />
               <span>{voteCount.fire}</span>
             </button>
@@ -409,6 +425,7 @@ export default function Home() {
               <span>{voteCount.meh}</span>
             </button>
             <button
+              data-tooltip-target="tooltip-top"
               aria-label={`${
                 clicked.angry ? "Angry selected" : "Angry not selected"
               }?`}
@@ -430,6 +447,7 @@ export default function Home() {
               />
               <span>{voteCount.angry}</span>
             </button>
+
             <button
               aria-label={`${
                 clicked.chad ? "chad selected" : "chad not selected"

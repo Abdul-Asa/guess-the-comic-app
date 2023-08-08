@@ -89,7 +89,11 @@ const Marker: React.FC<MarkerProps> = ({ style, children, run }) => {
         console.log({ copied: true, url: fullURL });
       }}
     >
-      <span className={style} ref={markerRef} onClick={run}>
+      <span
+        className={`${style} marker md:inline-block hidden`}
+        ref={markerRef}
+        onClick={run}
+      >
         {children}
       </span>
     </CopyToClipboard>

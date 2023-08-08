@@ -1,4 +1,4 @@
-export const getVoteItem = (key: string): any | null => {
+export const getKeyItem = (key: string): any | null => {
   let item;
   if (typeof window !== "undefined") {
     // Perform localStorage action
@@ -7,10 +7,7 @@ export const getVoteItem = (key: string): any | null => {
   return item ? item : null;
 };
 
-export const setVoteItem = (
-  key: string,
-  value: Record<string, boolean>
-): void => {
+export const setKeyItem = (key: string, value: Record<string, any>): void => {
   if (typeof window !== "undefined") {
     localStorage.setItem(key, JSON.stringify(value));
   }

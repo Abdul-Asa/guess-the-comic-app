@@ -2,11 +2,11 @@ import "./globals.css";
 import "../styles/font.css";
 import { ThemeProvider } from "./theme-provider";
 import Client from "./animate-wrapper";
-
+import cardImage from "../../public/download.jpeg";
 const meta = {
   title: "Guess the comic",
   description: "Big webcomic fan? Come and test out your skills",
-  cardImage: "/download.jpeg",
+  cardImage: cardImage,
   robots: "follow, index",
   favicon: "/favicon.ico",
   url: "https://my-app-sand-ten.vercel.app/",
