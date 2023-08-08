@@ -18,7 +18,7 @@ import logo from "../../../public/download.png";
 export default function Play() {
   const router = useRouter();
   const height = document.body.scrollHeight;
-  const width = window.innerWidth;
+  const width = document.body.scrollWidth;
 
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();

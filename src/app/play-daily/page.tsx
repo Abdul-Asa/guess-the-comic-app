@@ -22,7 +22,7 @@ const getDaily = async () => {
 
 export default function Play() {
   const height = document.body.scrollHeight;
-  const width = window.innerWidth;
+  const width = document.body.scrollWidth;
 
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
@@ -266,7 +266,9 @@ export default function Play() {
           {isVisible && lives != 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
-                Nice! 😎
+                {playerInfo?.today
+                  ? "You've attempted today's challenge already"
+                  : " Nice! 😎"}
               </h1>
               <ol>
                 <li>Played: {playerInfo?.played}</li>
@@ -286,7 +288,9 @@ export default function Play() {
           {isVisible && lives == 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
-                You lose!🗿
+                {playerInfo?.today
+                  ? "You've attempted today's challenge already"
+                  : "You lose!🗿"}
               </h1>
               <ol>
                 <li>Played: {playerInfo?.played}</li>
