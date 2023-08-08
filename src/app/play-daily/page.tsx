@@ -4,7 +4,7 @@ import Image, { ImageLoaderProps } from "next/image";
 import { fetchData } from "@/utils/fetchApi";
 import Confetti from "react-confetti";
 import { useEffect, useState } from "react";
-import { DataItem, RawItem } from "@/utils/type";
+import { DataItem, RawItem, getDate } from "@/utils/type";
 import InputDropdown from "@/components/InputDropdown";
 import AnimatedDiv from "@/components/AnimatedDiv";
 import Link from "next/link";
@@ -14,6 +14,7 @@ import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { getKeyItem, setKeyItem } from "@/utils/Action";
 import logo from "../../../public/download.png";
 
+// Function to get daily comics
 const getDaily = async () => {
   let supabase = createClientComponentClient();
   let { data } = await supabase.from("Daily").select("day,comic");
@@ -21,9 +22,8 @@ const getDaily = async () => {
 };
 
 export default function Play() {
- 
+  // State variables
   const [dimensions, setDimensions] = useState({ height: 200, width: 200 });
-
   const [list, setlist] = useState<DataItem[]>([]);
   const [answer, setanswer] = useState<DataItem>();
   const [guesses, setGuesses] = useState<DataItem[]>([]);
@@ -39,15 +39,7 @@ export default function Play() {
     lastTime: getDate(),
   });
 
-  function getDate() {
-    const today = new Date();
-    const month = today.getMonth() + 1;
-    const year = today.getFullYear();
-    const date = today.getDate();
-    return `${month}/${date}/${year}`;
-  }
-  const date = getDate();
-
+  // Function to load the page
   const loadPage = () => {
     setIsloading(true);
     fetchData({ countries: { kr: true }, trending: "Trending" }).then(
@@ -82,10 +74,12 @@ export default function Play() {
       }
     );
   };
+  // Image loader function
   const imageLoader = ({ src, width, quality }: ImageLoaderProps): string => {
     return `https://meo.comick.pictures/${src}?w=${width}&q=${quality || 100}`;
   };
 
+  // Function to handle option selection
   const handleOptionSelected = (option: DataItem): boolean => {
     console.log(option);
     setGuesses((prev) => [...prev, option]);
@@ -150,6 +144,8 @@ export default function Play() {
     return option.title == answer?.title;
   };
 
+  // useEffect hooks
+  //Update the list after API fetch
   useEffect(() => {
     if (list.length > 0) {
       getDaily().then((res) => {
@@ -168,13 +164,14 @@ export default function Play() {
     }
   }, [list]);
 
+  //Load the page on mount
   useEffect(() => {
     loadPage();
   }, []);
 
+  //Get user history from local storage
   useEffect(() => {
     const test = JSON.parse(getKeyItem("daily"));
-    // console.log(test.lastTime, getDate());
     if (test) {
       if (test.lastTime != getDate()) {
         setplayerInfo({ ...test, today: false });
@@ -194,6 +191,7 @@ export default function Play() {
     }
   }, []);
 
+  //set dimensions of confetti on mount
   useEffect(() => {
     setDimensions({
       height: document.body.scrollHeight,
@@ -201,8 +199,10 @@ export default function Play() {
     });
   }, []);
 
+  // Main return statement
   return (
     <main className="flex min-h-screen flex-col items-center px-6 md:px-24">
+      {/* Navigation bar */}
       <nav id="navbar" className=" w-full flex justify-center sticky  ">
         <div className=" come-in w-full max-w-4xl flex justify-between items-center p-3 text-sm text-foreground">
           <a href="/">
@@ -222,9 +222,10 @@ export default function Play() {
         </div>
       </nav>
 
+      {/* Loading state */}
       {loading && (
         <div className="mt-10 flex flex-col items-center">
-          <h1>{date}</h1>
+          <h1>{getDate()}</h1>
           <Spinner />
           <Link
             href="/"
@@ -236,6 +237,7 @@ export default function Play() {
           </Link>
         </div>
       )}
+      {/* Main game section */}
       {!loading && answer && (
         <section className="flex flex-col items-center w-full">
           <div
@@ -319,3 +321,11 @@ export default function Play() {
     </main>
   );
 }
+
+// ------- Refactoring Suggestions -------
+// 1. The code inside the loadPage function can be refactored into a separate API call function.
+// 2. The player's game logic and state management could be moved into a custom hook or separate module to keep the component clean.
+// 3. The rendering logic for different game states (loading, win, lose) could be broken down into smaller components.
+// 4. Consider using TypeScript interfaces or types for defining the shape of the state and props.
+// 5. The getDate function could be moved to a utility file if it's used in other parts of the application.
+

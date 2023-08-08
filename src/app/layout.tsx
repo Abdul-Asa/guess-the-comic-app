@@ -2,7 +2,7 @@ import "./globals.css";
 import "../styles/font.css";
 import { ThemeProvider } from "./theme-provider";
 import Client from "./animate-wrapper";
-import cardImage from "../../public/download.jpeg";
+import cardImage from "../../public/download.png";
 const meta = {
   title: "Guess the comic",
   description: "Big webcomic fan? Come and test out your skills",
