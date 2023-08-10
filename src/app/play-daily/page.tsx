@@ -11,7 +11,7 @@ import Link from "next/link";
 import { ColorSwitcher } from "@/components/ColorSwitch";
 import Spinner from "@/components/Spinner";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
-import { getKeyItem, setKeyItem } from "@/utils/Action";
+import { getKeyItem, setKeyItem } from "@/utils/action";
 import logo from "../../../public/download.png";
 
 // Function to get daily comics

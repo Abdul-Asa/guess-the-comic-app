@@ -9,7 +9,7 @@ import gif2 from "../../public/gif2.gif";
 import gif3 from "../../public/ezgif.com-video-to-gif.gif";
 import { NanaQuipping, KomiQuipping } from "@/components/QuippingCharacters";
 import chad from "../../public/chad.png";
-import { getKeyItem, setKeyItem } from "@/utils/Action";
+import { getKeyItem, setKeyItem } from "@/utils/action";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { VoteItem } from "@/utils/type";
 import Marker from "@/components/Hand-drawn-circle";
