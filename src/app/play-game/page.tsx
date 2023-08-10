@@ -128,8 +128,22 @@ export default function Play() {
   useEffect(() => {
     if (list.length > 0) {
       const theOne = getRandomElement(list);
-      setanswer(theOne);
-      setIsloading(false);
+      if (
+        theOne.title === null ||
+        theOne.title === "null" ||
+        theOne.year === null ||
+        theOne.year === "null" ||
+        theOne.last_chapter === null ||
+        theOne.last_chapter === "null" ||
+        theOne.imgSrc === null ||
+        theOne.imgSrc === "null"
+      ) {
+        const updatedList = list.filter((item) => item.title !== theOne.title);
+        setlist(updatedList);
+      } else {
+        setanswer(theOne);
+        setIsloading(false);
+      }
     }
   }, [list]);
 
@@ -218,7 +232,10 @@ export default function Play() {
           <InputDropdown options={list} callback={handleOptionSelected} />
           <AnimatedDiv guessList={guesses} answer={answer} />{" "}
           <button
-            onClick={() => setIsVisible(true)}
+            onClick={() => {
+              setLives(-1);
+              setIsVisible(true);
+            }}
             className="group mt-4 transition duration-300"
           >
             Give up
@@ -232,10 +249,10 @@ export default function Play() {
             Home
             <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
           </Link>
-          {isVisible && lives != 0 && (
+          {isVisible && lives > 0 && (
             <Confetti height={dimensions.height} width={dimensions.width} />
           )}
-          {isVisible && lives != 0 && (
+          {isVisible && lives > 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 You win 🎉
@@ -265,7 +282,7 @@ export default function Play() {
               </div>
             </Modal>
           )}
-          {isVisible && lives == 0 && (
+          {isVisible && lives <= 0 && (
             <Modal>
               <h1 className="mb-5 text-lg font-normal text-white dark:text-gray-400">
                 You lose 😞

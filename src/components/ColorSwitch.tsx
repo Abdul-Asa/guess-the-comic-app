@@ -3,12 +3,12 @@ import { useTheme } from "next-themes";
 import { useEffect } from "react";
 export const ColorSwitcher = () => {
   const { theme, setTheme } = useTheme();
-  useEffect(() => {
-    const userPrefersDark =
-      window.matchMedia &&
-      window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setTheme(userPrefersDark ? "dark" : "light");
-  }, []);
+  // useEffect(() => {
+  //   const userPrefersDark =
+  //     window.matchMedia &&
+  //     window.matchMedia("(prefers-color-scheme: dark)").matches;
+  //   setTheme(userPrefersDark ? "dark" : "light");
+  // }, []);
 
   return (
     <label className="relative inline-flex items-center cursor-pointer">

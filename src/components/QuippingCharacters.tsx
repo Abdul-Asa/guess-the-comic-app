@@ -32,7 +32,7 @@ export const NanaQuipping = () => {
   const handleClick = () => {
     setIsVisible(true);
     setDisabled(true);
-    setQuipIndex((prevIndex) => (prevIndex + 1) % quips.length);
+    setQuipIndex(() => Math.floor(Math.random() * quips.length) % quips.length);
     setTimeout(() => {
       setIsVisible(false);
       setDisabled(false);

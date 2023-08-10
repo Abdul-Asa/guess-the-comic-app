@@ -41,10 +41,12 @@ Have ideas, suggestions, or just want to say "cool website"? Feel free to reach 
 - [Discord](https://discord.com/channels/860696481837350912/860708414854266882)
 
 Feel free to make any adjustments or let me know if you need anything else. Happy gaming! 🌟
----
+--------------------------------------------------------------------------------------------
+
 ### Things to fix
-- Inconsistent theme toggle button
-- Remove comics with null values
+
+- ~~Inconsistent theme toggle button~~
+- ~~Remove comics with null values~~
 - Fix modals on play-daily page
-- Speed up/remove laggy page transitions
-- Seperate play again and change preference settings
+- ~~Speed up/remove laggy page transitions~~
+- ~~Seperate play again and change preference settings~~

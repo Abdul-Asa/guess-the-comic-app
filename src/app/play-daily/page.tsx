@@ -279,7 +279,7 @@ export default function Play() {
                   ? "You've attempted today's challenge already"
                   : " Nice! 😎"}
               </h1>
-              <ol>
+              <ol className="text-white">
                 <li>Played: {playerInfo?.played}</li>
                 <li>Wins: {playerInfo?.wins}</li>
                 <li>Current streak: {playerInfo?.streak}</li>
@@ -301,7 +301,7 @@ export default function Play() {
                   ? "You've attempted today's challenge already"
                   : "You lose!🗿"}
               </h1>
-              <ol>
+              <ol className=".text-white">
                 <li>Played: {playerInfo?.played}</li>
                 <li>Wins: {playerInfo?.wins}</li>
                 <li>Current streak: {playerInfo?.streak}</li>
