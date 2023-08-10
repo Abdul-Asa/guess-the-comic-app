@@ -17,7 +17,7 @@ import logo from "../../../public/download.png";
 
 export default function Play() {
   const router = useRouter();
-  
+
   const [dimensions, setDimensions] = useState({ height: 200, width: 200 });
 
   const [list, setlist] = useState<DataItem[]>([]);
@@ -41,6 +41,16 @@ export default function Play() {
   const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setRadio(event.target.value);
   };
+
+  const tryAgain = () => {
+    const updatedList = list.filter((item) => item.title !== answer?.title);
+    setlist(updatedList);
+    setLives(6);
+    setIsVisible(false);
+    setblur(true);
+    setGuesses([]);
+  };
+
   const loadPage = () => {
     setopenModal(false);
     setIsloading(true);
@@ -206,7 +216,14 @@ export default function Play() {
           </div>
           <h1 className=" m-4">Guess {7 - lives >= 7 ? 6 : 7 - lives} of 6</h1>
           <InputDropdown options={list} callback={handleOptionSelected} />
-          <AnimatedDiv guessList={guesses} answer={answer} />
+          <AnimatedDiv guessList={guesses} answer={answer} />{" "}
+          <button
+            onClick={() => setIsVisible(true)}
+            className="group mt-4 transition duration-300"
+          >
+            Give up
+            <span className="block max-w-0 group-hover:max-w-full transition-all duration-500 h-0.5 bg-black dark:bg-white"></span>
+          </button>
           <Link
             href="/"
             as={"/"}
@@ -230,9 +247,15 @@ export default function Play() {
               <div className="flex gap-4">
                 <button
                   className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={restartGame}
+                  onClick={tryAgain}
                 >
                   Play again
+                </button>
+                <button
+                  className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={restartGame}
+                >
+                  Change Settings
                 </button>
                 <a href="/">
                   <button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
@@ -254,9 +277,15 @@ export default function Play() {
               <div className="flex gap-4">
                 <button
                   className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                  onClick={restartGame}
+                  onClick={tryAgain}
                 >
                   Try again
+                </button>
+                <button
+                  className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onClick={restartGame}
+                >
+                  Change Settings
                 </button>
                 <a href="/">
                   <button className="flex-1 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
